@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fatiando.gravmag.euler &#8212; Fatiando 0.5</title>
+    
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/font-awesome/css/font-awesome.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     'ac692aa892ddbb386f6a76d0f429099587eb2b37',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="Fatiando 0.5" href="../../../index.html" />
+    <link rel="up" title="fatiando" href="../../fatiando.html" />
+    
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-38125837-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head>
+  <body role="document">
+
+
+
+
+  <div id="navbar" class="navbar navbar-default navbar-default ">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html"><img src="../../../_static/fatiando-logo.png">
+          fatiando</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.5</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../install.html">Install</a></li>
+                <li><a href="../../../gallery/index.html">Gallery</a></li>
+                <li><a href="../../../api/fatiando.html">API</a></li>
+                <li><a href="../../../docs.html">Docs</a></li>
+                <li><a href="../../../develop.html">Contribute</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <h1>Source code for fatiando.gravmag.euler</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Euler deconvolution methods for potential fields.</span>
+
+
+<span class="sd">* :class:`~fatiando.gravmag.euler.EulerDeconv`: The classic 3D solution to</span>
+<span class="sd">  Euler&#39;s equation for potential fields (Reid et al., 1990). Runs on the whole</span>
+<span class="sd">  dataset.</span>
+<span class="sd">* :class:`~fatiando.gravmag.euler.EulerDeconvEW`: Run Euler deconvolution on an</span>
+<span class="sd">  expanding window over the data set and keep the best estimate.</span>
+<span class="sd">* :class:`~fatiando.gravmag.euler.EulerDeconvMW`: Run Euler deconvolution on a</span>
+<span class="sd">  moving window over the data set to produce a set of estimates.</span>
+
+<span class="sd">**References**</span>
+
+<span class="sd">Reid, A. B., J. M. Allsop, H. Granser, A. J. Millett, and I. W. Somerton</span>
+<span class="sd">(1990), Magnetic interpretation in three dimensions using Euler deconvolution,</span>
+<span class="sd">Geophysics, 55(1), 80-91, doi:10.1190/1.1442774.</span>
+
+<span class="sd">----</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">future.builtins</span> <span class="k">import</span> <span class="nb">super</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">gridder</span>
+<span class="kn">from</span> <span class="nn">..inversion</span> <span class="k">import</span> <span class="n">Misfit</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">safe_inverse</span><span class="p">,</span> <span class="n">safe_dot</span><span class="p">,</span> <span class="n">safe_diagonal</span>
+
+
+<div class="viewcode-block" id="EulerDeconv"><a class="viewcode-back" href="../../../api/gravmag.euler.html#fatiando.gravmag.euler.EulerDeconv">[docs]</a><span class="k">class</span> <span class="nc">EulerDeconv</span><span class="p">(</span><span class="n">Misfit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Classic 3D Euler deconvolution of potential field data.</span>
+
+<span class="sd">    Follows the formulation of Reid et al. (1990). Performs the deconvolution</span>
+<span class="sd">    on the whole data set. For windowed approaches, use</span>
+<span class="sd">    :class:`~fatiando.gravmag.euler.EulerDeconvMW` (moving window)</span>
+<span class="sd">    and</span>
+<span class="sd">    :class:`~fatiando.gravmag.euler.EulerDeconvEW` (expanding window).</span>
+
+<span class="sd">    Works on any potential field that satisfies Euler&#39;s homogeneity equation</span>
+<span class="sd">    (both gravity and magnetic, assuming simple sources):</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        (x_i - x_0)\dfrac{\partial f_i}{\partial x} +</span>
+<span class="sd">        (y_i - y_0)\dfrac{\partial f_i}{\partial y} +</span>
+<span class="sd">        (z_i - z_0)\dfrac{\partial f_i}{\partial z} =</span>
+<span class="sd">        \eta (b - f_i),</span>
+
+<span class="sd">    in which :math:`f_i` is the given potential field observation at point</span>
+<span class="sd">    :math:`(x_i, y_i, z_i)`, :math:`b` is the base level (a constant shift of</span>
+<span class="sd">    the field, like a regional field), :math:`\eta` is the structural index,</span>
+<span class="sd">    and :math:`(x_0, y_0, z_0)` are the coordinates of a point on the source</span>
+<span class="sd">    (for a sphere, this is the center point).</span>
+
+<span class="sd">    The Euler deconvolution estimates :math:`(x_0, y_0, z_0)` and :math:`b`</span>
+<span class="sd">    given a potential field and its x, y, z derivatives and the structural</span>
+<span class="sd">    index. However, **this assumes that the sources are ideal** (see the table</span>
+<span class="sd">    below). We recommend reading Reid and Thurston (2014) for a discussion on</span>
+<span class="sd">    what the structural index means and what it does not mean.</span>
+
+<span class="sd">    .. warning::</span>
+
+<span class="sd">        Please read the paper Reid et al. (2014)  to avoid doing **horrible</span>
+<span class="sd">        things** with Euler deconvolution. Uieda et al. (2014) offer a</span>
+<span class="sd">        practical tutorial using Fatiando code and show some common</span>
+<span class="sd">        misinterpretations.</span>
+
+<span class="sd">    After Reid et al. (2014), values of the structural index (SI) can be:</span>
+
+<span class="sd">    ===================================== ======== =========</span>
+<span class="sd">    Source type                           SI (Mag) SI (Grav)</span>
+<span class="sd">    ===================================== ======== =========</span>
+<span class="sd">    Point, sphere                            3         2</span>
+<span class="sd">    Line, cylinder, thin bed fault           2         1</span>
+<span class="sd">    Thin sheet edge, thin sill, thin dyke    1         0</span>
+<span class="sd">    ===================================== ======== =========</span>
+
+<span class="sd">    Use the :meth:`~fatiando.gravmag.euler.EulerDeconv.fit` method to run the</span>
+<span class="sd">    deconvolution. The estimated coordinates :math:`(x_0, y_0, z_0)` are stored</span>
+<span class="sd">    in the ``estimate_`` attribute and the estimated base level :math:`b` is</span>
+<span class="sd">    stored in ``baselevel_``.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        Using structural index of 0 is not supported yet.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        The data does **not** need to be gridded for this! So long as you</span>
+<span class="sd">        can calculate the derivatives of non-gridded data (using an Equivalent</span>
+<span class="sd">        Layer, for example).</span>
+
+<span class="sd">    .. note:: x is North, y is East, and z is down.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        Units of the input data (x, y, z, field, derivatives) must be in SI</span>
+<span class="sd">        units! Otherwise, the results will be in strange units. Use functions</span>
+<span class="sd">        in :mod:`fatiando.utils` to convert between units.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    * x, y, z : 1d-arrays</span>
+<span class="sd">        The x, y, and z coordinates of the observation points</span>
+<span class="sd">    * field : 1d-array</span>
+<span class="sd">        The potential field measured at the observation points</span>
+<span class="sd">    * xderiv, yderiv, zderiv : 1d-arrays</span>
+<span class="sd">        The x-, y-, and z-derivatives of the potential field (measured or</span>
+<span class="sd">        calculated) at the observation points</span>
+<span class="sd">    * index : float</span>
+<span class="sd">        The structural index of the source</span>
+
+<span class="sd">    References:</span>
+
+<span class="sd">    Reid, A. B., J. M. Allsop, H. Granser, A. J. Millett, and I. W. Somerton</span>
+<span class="sd">    (1990), Magnetic interpretation in three dimensions using Euler</span>
+<span class="sd">    deconvolution, Geophysics, 55(1), 80-91, doi:`10.1190/1.1442774</span>
+<span class="sd">    &lt;http://dx.doi.org/10.1190/1.1442774&gt;`__.</span>
+
+<span class="sd">    Reid, A. B., J. Ebbing, and S. J. Webb (2014), Avoidable Euler Errors – the</span>
+<span class="sd">    use and abuse of Euler deconvolution applied to potential fields,</span>
+<span class="sd">    Geophysical Prospecting, doi:`10.1111/1365-2478.12119</span>
+<span class="sd">    &lt;http://dx.doi.org/10.1111/1365-2478.12119&gt;`__.</span>
+
+<span class="sd">    Reid, A., and J. Thurston (2014), The structural index in gravity and</span>
+<span class="sd">    magnetic interpretation: Errors, uses, and abuses, GEOPHYSICS, 79(4),</span>
+<span class="sd">    J61-J66, doi:`10.1190/geo2013-0235.1</span>
+<span class="sd">    &lt;http://dx.doi.org/10.1190/geo2013-0235.1&gt;`__.</span>
+
+<span class="sd">    Uieda, L., V. C. Oliveira Jr., and V. C. F. Barbosa (2014), Geophysical</span>
+<span class="sd">    tutorial: Euler deconvolution of potential-field data, The Leading Edge,</span>
+<span class="sd">    33(4), 448-450, doi:`10.1190/tle33040448.1</span>
+<span class="sd">    &lt;http://dx.doi.org/10.1190/tle33040448.1&gt;`__.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">xderiv</span><span class="p">,</span> <span class="n">yderiv</span><span class="p">,</span> <span class="n">zderiv</span><span class="p">,</span>
+                 <span class="n">structural_index</span><span class="p">):</span>
+        <span class="n">same_shape</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+                         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">xderiv</span><span class="p">,</span> <span class="n">yderiv</span><span class="p">,</span> <span class="n">zderiv</span><span class="p">])</span>
+        <span class="k">assert</span> <span class="n">same_shape</span><span class="p">,</span> <span class="s1">&#39;All input arrays should have the same shape.&#39;</span>
+        <span class="k">assert</span> <span class="n">structural_index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> \
+            <span class="s2">&quot;Invalid structural index &#39;</span><span class="si">{}</span><span class="s2">&#39;. Should be &gt;= 0&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">structural_index</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=-</span><span class="n">x</span><span class="o">*</span><span class="n">xderiv</span> <span class="o">-</span> <span class="n">y</span><span class="o">*</span><span class="n">yderiv</span> <span class="o">-</span> <span class="n">z</span><span class="o">*</span><span class="n">zderiv</span> <span class="o">-</span> <span class="n">structural_index</span><span class="o">*</span><span class="n">field</span><span class="p">,</span>
+            <span class="n">nparams</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">islinear</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xderiv</span> <span class="o">=</span> <span class="n">xderiv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yderiv</span> <span class="o">=</span> <span class="n">yderiv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zderiv</span> <span class="o">=</span> <span class="n">zderiv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">structural_index</span> <span class="o">=</span> <span class="n">structural_index</span>
+
+    <span class="k">def</span> <span class="nf">jacobian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="n">jac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">ndata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nparams</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="n">jac</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">xderiv</span>
+        <span class="n">jac</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">yderiv</span>
+        <span class="n">jac</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">zderiv</span>
+        <span class="n">jac</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">structural_index</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ndata</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jac</span>
+
+    <span class="k">def</span> <span class="nf">predicted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">safe_dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jacobian</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="n">p</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">baselevel_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">p_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;No estimates found. Run &#39;fit&#39; first.&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">p_</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+<div class="viewcode-block" id="EulerDeconv.fmt_estimate"><a class="viewcode-back" href="../../../api/gravmag.euler.html#fatiando.gravmag.euler.EulerDeconv.fmt_estimate">[docs]</a>    <span class="k">def</span> <span class="nf">fmt_estimate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Separate the (x, y, z) point coordinates from the baselevel.</span>
+
+<span class="sd">        Coordinates are stored in ``estimate_`` and a base level is stored in</span>
+<span class="sd">        ``baselevel_``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">p</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="nf">_cut_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">area</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a copy of self with only data that falls inside the given area.</span>
+
+<span class="sd">        Used by the windowed versions of Euler deconvolution.</span>
+
+<span class="sd">        Parameters:</span>
+
+<span class="sd">        * area : list = (x1, x2, y1, y2)</span>
+<span class="sd">            The limiting coordinates of the area</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        * subset</span>
+<span class="sd">            An instance of this class.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">area</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">x1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">x2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="n">y1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="n">y2</span><span class="p">))</span>
+        <span class="n">slices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">,</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">xderiv</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yderiv</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">zderiv</span><span class="p">]]</span>
+        <span class="n">slices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">structural_index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">EulerDeconv</span><span class="p">(</span><span class="o">*</span><span class="n">slices</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EulerDeconvEW"><a class="viewcode-back" href="../../../api/gravmag.euler.html#fatiando.gravmag.euler.EulerDeconvEW">[docs]</a><span class="k">class</span> <span class="nc">EulerDeconvEW</span><span class="p">(</span><span class="n">EulerDeconv</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Euler deconvolution using an expanding window scheme.</span>
+
+<span class="sd">    Uses data inside a window of growing size to perform the Euler</span>
+<span class="sd">    deconvolution. Keeps the best result, judged by the estimated error.</span>
+
+<span class="sd">    The deconvolution is performed as in</span>
+<span class="sd">    :class:`~fatiando.gravmag.euler.EulerDeconv`.</span>
+
+<span class="sd">    Use the :meth:`~fatiando.gravmag.euler.EulerDeconvEW.fit` method to produce</span>
+<span class="sd">    an estimate. The estimated point is stored in the attribute ``estimate_``</span>
+<span class="sd">    and the base level in ``baselevel_``.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    * x, y, z : 1d-arrays</span>
+<span class="sd">        The x, y, and z coordinates of the observation points</span>
+<span class="sd">    * field : 1d-array</span>
+<span class="sd">        The potential field measured at the observation points</span>
+<span class="sd">    * xderiv, yderiv, zderiv : 1d-arrays</span>
+<span class="sd">        The x-, y-, and z-derivatives of the potential field (measured or</span>
+<span class="sd">        calculated) at the observation points</span>
+<span class="sd">    * index : float</span>
+<span class="sd">        The structural index of the source</span>
+<span class="sd">    * center : [x, y]</span>
+<span class="sd">        The x, y coordinates of the center of the expanding windows.</span>
+<span class="sd">    * sizes : list or 1d-array</span>
+<span class="sd">        The sizes of the windows.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">xderiv</span><span class="p">,</span> <span class="n">yderiv</span><span class="p">,</span> <span class="n">zderiv</span><span class="p">,</span>
+                 <span class="n">structural_index</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">sizes</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">xderiv</span><span class="p">,</span> <span class="n">yderiv</span><span class="p">,</span> <span class="n">zderiv</span><span class="p">,</span>
+                         <span class="n">structural_index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sizes</span> <span class="o">=</span> <span class="n">sizes</span>
+
+<div class="viewcode-block" id="EulerDeconvEW.fit"><a class="viewcode-back" href="../../../api/gravmag.euler.html#fatiando.gravmag.euler.EulerDeconvEW.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform the Euler deconvolution with expanding windows.</span>
+
+<span class="sd">        The estimated point is stored in ``estimate_``, the base level in</span>
+<span class="sd">        ``baselevel_``.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sizes</span><span class="p">:</span>
+            <span class="n">ds</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">size</span>
+            <span class="n">window</span> <span class="o">=</span> <span class="p">[</span><span class="n">xc</span> <span class="o">-</span> <span class="n">ds</span><span class="p">,</span> <span class="n">xc</span> <span class="o">+</span> <span class="n">ds</span><span class="p">,</span> <span class="n">yc</span> <span class="o">-</span> <span class="n">ds</span><span class="p">,</span> <span class="n">yc</span> <span class="o">+</span> <span class="n">ds</span><span class="p">]</span>
+            <span class="n">solver</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cut_window</span><span class="p">(</span><span class="n">window</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+            <span class="c1"># Don&#39;t really know why dividing by ndata makes this better but it</span>
+            <span class="c1"># does.</span>
+            <span class="n">cov</span> <span class="o">=</span> <span class="n">safe_inverse</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">hessian</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">p_</span><span class="p">)</span><span class="o">/</span><span class="n">solver</span><span class="o">.</span><span class="n">ndata</span><span class="p">)</span>
+            <span class="n">uncertainty</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">safe_diagonal</span><span class="p">(</span><span class="n">cov</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+            <span class="n">mean_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">uncertainty</span><span class="p">)</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_error</span><span class="p">)</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">p_</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">errors</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="bp">self</span></div></div>
+
+
+<div class="viewcode-block" id="EulerDeconvMW"><a class="viewcode-back" href="../../../api/gravmag.euler.html#fatiando.gravmag.euler.EulerDeconvMW">[docs]</a><span class="k">class</span> <span class="nc">EulerDeconvMW</span><span class="p">(</span><span class="n">EulerDeconv</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Solve an Euler deconvolution problem using a moving window scheme.</span>
+
+<span class="sd">    Uses data inside a window moving to perform the Euler deconvolution. Keeps</span>
+<span class="sd">    only a top percentage of the estimates from all windows.</span>
+
+<span class="sd">    The deconvolution is performed as in</span>
+<span class="sd">    :class:`~fatiando.gravmag.euler.EulerDeconv`.</span>
+
+<span class="sd">    Use the :meth:`~fatiando.gravmag.euler.EulerDeconvMW.fit` method to produce</span>
+<span class="sd">    an estimate. The estimated points are stored in ``estimate_`` as a 2D numpy</span>
+<span class="sd">    array. Each line in the array is an [x, y, z] coordinate of a point. The</span>
+<span class="sd">    base levels are stored in ``baselevel_``.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    * x, y, z : 1d-arrays</span>
+<span class="sd">        The x, y, and z coordinates of the observation points</span>
+<span class="sd">    * field : 1d-array</span>
+<span class="sd">        The potential field measured at the observation points</span>
+<span class="sd">    * xderiv, yderiv, zderiv : 1d-arrays</span>
+<span class="sd">        The x-, y-, and z-derivatives of the potential field (measured or</span>
+<span class="sd">        calculated) at the observation points</span>
+<span class="sd">    * index : float</span>
+<span class="sd">        The structural index of the source</span>
+<span class="sd">    * windows : (ny, nx)</span>
+<span class="sd">        The number of windows in the y and x directions</span>
+<span class="sd">    * size : (dy, dx)</span>
+<span class="sd">        The size of the windows in the y and x directions</span>
+<span class="sd">    * keep : float</span>
+<span class="sd">        Decimal percentage of solutions to keep. Will rank the solutions by</span>
+<span class="sd">        increasing error and keep only the first *keep* percent.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">xderiv</span><span class="p">,</span> <span class="n">yderiv</span><span class="p">,</span> <span class="n">zderiv</span><span class="p">,</span>
+                 <span class="n">structural_index</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">xderiv</span><span class="p">,</span> <span class="n">yderiv</span><span class="p">,</span> <span class="n">zderiv</span><span class="p">,</span>
+                         <span class="n">structural_index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">windows</span> <span class="o">=</span> <span class="n">windows</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keep</span> <span class="o">=</span> <span class="n">keep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_centers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_window_centers</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_window_centers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the center coordinates of the windows.</span>
+
+<span class="sd">        Based on the data stored in the given Euler Deconvolution solver.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        * centers : list</span>
+<span class="sd">            List of [x, y] coordinate pairs for the center of each window.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ny</span><span class="p">,</span> <span class="n">nx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">windows</span>
+        <span class="n">dy</span><span class="p">,</span> <span class="n">dx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">centers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">xmidpoints</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x1</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dx</span><span class="p">,</span> <span class="n">x2</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dx</span><span class="p">,</span> <span class="n">nx</span><span class="p">)</span>
+        <span class="n">ymidpoints</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">y1</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dy</span><span class="p">,</span> <span class="n">y2</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dy</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">yc</span> <span class="ow">in</span> <span class="n">ymidpoints</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">xc</span> <span class="ow">in</span> <span class="n">xmidpoints</span><span class="p">:</span>
+                <span class="n">centers</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">centers</span>
+
+<div class="viewcode-block" id="EulerDeconvMW.fit"><a class="viewcode-back" href="../../../api/gravmag.euler.html#fatiando.gravmag.euler.EulerDeconvMW.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform the Euler deconvolution on a moving window.</span>
+
+<span class="sd">        The estimated points are stored in ``estimate_``, the base levels in</span>
+<span class="sd">        ``baselevel_``.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dy</span><span class="p">,</span> <span class="n">dx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">paramvecs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">estimates</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">baselevels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Thank you Saulinho for the solution!</span>
+        <span class="c1"># Calculate the mid-points of the windows</span>
+        <span class="k">for</span> <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_centers</span><span class="p">:</span>
+                <span class="n">window</span> <span class="o">=</span> <span class="p">[</span><span class="n">xc</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dx</span><span class="p">,</span> <span class="n">xc</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dx</span><span class="p">,</span>
+                          <span class="n">yc</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dy</span><span class="p">,</span> <span class="n">yc</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dy</span><span class="p">]</span>
+                <span class="n">solver</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cut_window</span><span class="p">(</span><span class="n">window</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+                <span class="n">cov</span> <span class="o">=</span> <span class="n">safe_inverse</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">hessian</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">p_</span><span class="p">))</span>
+                <span class="n">uncertainty</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">safe_diagonal</span><span class="p">(</span><span class="n">cov</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+                <span class="n">mean_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">uncertainty</span><span class="p">)</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_error</span><span class="p">)</span>
+                <span class="n">paramvecs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">p_</span><span class="p">)</span>
+                <span class="n">estimates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">estimate_</span><span class="p">)</span>
+                <span class="n">baselevels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">baselevel_</span><span class="p">)</span>
+        <span class="n">best</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">errors</span><span class="p">)[:</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keep</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">))]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">paramvecs</span><span class="p">)[</span><span class="n">best</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">baselevel_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">p_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;No estimates found. Run &#39;fit&#39; first.&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">p_</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
+
+<div class="viewcode-block" id="EulerDeconvMW.fmt_estimate"><a class="viewcode-back" href="../../../api/gravmag.euler.html#fatiando.gravmag.euler.EulerDeconvMW.fmt_estimate">[docs]</a>    <span class="k">def</span> <span class="nf">fmt_estimate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Separate the (x, y, z) point coordinates from the baselevel.</span>
+
+<span class="sd">        Coordinates are stored in ``estimate_`` and a base level is stored in</span>
+<span class="sd">        ``baselevel_``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">p</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span></div></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        <p class="pull-right">
+            <a href="#">Back to top</a>
+            
+                <br/>
+                
+            
+        </p>
+
+        <p class="text-center">
+            &copy; Copyright 2010-2016, Leonardo Uieda.
+            Created using <a
+                href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+        </p>
+    </div>
+</footer>
+  </body>
+</html>

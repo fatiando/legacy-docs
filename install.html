@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installing Fatiando &#8212; Fatiando 0.5</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/gallery.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.2.0/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/font-awesome/css/font-awesome.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     'ac692aa892ddbb386f6a76d0f429099587eb2b37',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Fatiando 0.5" href="index.html" />
+    <link rel="next" title="The fatiando package" href="api/fatiando.html" />
+    <link rel="prev" title="Changelog" href="changelog.html" />
+    
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-38125837-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head>
+  <body role="document">
+
+
+
+
+  <div id="navbar" class="navbar navbar-default navbar-default ">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img src="_static/fatiando-logo.png">
+          fatiando</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.5</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="#">Install</a></li>
+                <li><a href="gallery/index.html">Gallery</a></li>
+                <li><a href="api/fatiando.html">API</a></li>
+                <li><a href="docs.html">Docs</a></li>
+                <li><a href="develop.html">Contribute</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Installing Fatiando</a><ul>
+<li><a class="reference internal" href="#which-python">Which Python?</a></li>
+<li><a class="reference internal" href="#installing-with-conda">Installing with conda</a></li>
+<li><a class="reference internal" href="#installing-with-pip">Installing with pip</a></li>
+<li><a class="reference internal" href="#installing-the-latest-development-version">Installing the latest development version</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#testing-the-install">Testing the install</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="col-md-9">
+      
+  <div class="section" id="installing-fatiando">
+<span id="install"></span><h1>Installing Fatiando<a class="headerlink" href="#installing-fatiando" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you have any trouble installing please <a class="reference external" href="https://github.com/fatiando/fatiando/issues">submit a bug report on Github</a>
+or write to the <a class="reference external" href="https://groups.google.com/d/forum/fatiando">mailing list</a>.</p>
+</div>
+<div class="section" id="which-python">
+<h2>Which Python?<a class="headerlink" href="#which-python" title="Permalink to this headline">¶</a></h2>
+<p>For the moment, Fatiando is only tested on <strong>Python 2.7</strong>.
+Support for Python &gt;= 3.5 is planned for future releases.
+If you&#8217;d like to help us add support for Python 3, please get in touch through
+the <a class="reference external" href="https://groups.google.com/d/forum/fatiando">mailing list</a>.</p>
+<p>We recommend using the <a class="reference external" href="https://www.continuum.io/downloads">Anaconda</a> Python distribution to ensure you have all
+dependencies installed and the <code class="docutils literal"><span class="pre">conda</span></code> package manager available.
+Installing Anaconda does not require administrative rights to your computer and
+doesn&#8217;t interfere with any other Python installations in your system.</p>
+</div>
+<div class="section" id="installing-with-conda">
+<h2>Installing with conda<a class="headerlink" href="#installing-with-conda" title="Permalink to this headline">¶</a></h2>
+<p>You can install Fatiando and all it&#8217;s dependencies using the <code class="docutils literal"><span class="pre">conda</span></code> package
+manager by running:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">fatiando</span> <span class="o">--</span><span class="n">channel</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
+</pre></div>
+</div>
+<p>This command will automatically install a pre-compiled version of Fatiando and
+all required <a class="reference internal" href="#dependencies"><span class="std std-ref">dependencies</span></a>.
+The compiled <code class="docutils literal"><span class="pre">conda</span></code> packages are made through the <a class="reference external" href="https://conda-forge.github.io/">conda-forge</a> community-led
+organization.</p>
+<p>The above command will not install Mayavi automatically because it requires an
+older version of numpy (1.9). This means that, if you want to install Mayavi,
+you won&#8217;t be able to use the latest versions of most libraries, particularly
+matplotlib &gt; 1.4. However, if you do want Mayavi, you can install Fatiando
+compatible numpy 1.9 by using:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">fatiando</span> <span class="n">mayavi</span> <span class="o">--</span><span class="n">channel</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
+</pre></div>
+</div>
+<p>Be aware that this will likely downgrade your installed libraries to be
+compatible.</p>
+</div>
+<div class="section" id="installing-with-pip">
+<h2>Installing with pip<a class="headerlink" href="#installing-with-pip" title="Permalink to this headline">¶</a></h2>
+<p>You can also install Fatiando using the <a class="reference external" href="https://pip.pypa.io/en/stable/">pip</a> package manager:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">fatiando</span>
+</pre></div>
+</div>
+<p>However, this will require that you already have all <a class="reference internal" href="#dependencies"><span class="std std-ref">dependencies</span></a> installed as well as a C compiler.</p>
+<p>On <strong>Windows</strong> you might get an error saying that <code class="docutils literal"><span class="pre">Microsoft</span> <span class="pre">Visual</span> <span class="pre">C++</span>
+<span class="pre">is</span> <span class="pre">required</span> <span class="pre">(Unable</span> <span class="pre">to</span> <span class="pre">find</span> <span class="pre">vsvarsall.bat).</span></code> like the following:</p>
+<div class="figure">
+<img alt="_images/windows-compile-error-visual-studio.png" src="_images/windows-compile-error-visual-studio.png" />
+</div>
+<p>This is because you don&#8217;t have the Microsoft C compiler installed. Follow
+the link in the error message (<a class="reference external" href="http://aka.ms/vcpython27">http://aka.ms/vcpython27</a>) to download the Microsoft Visual C++
+Compiler for Python 2.7. Install it and install Fatiando again.</p>
+</div>
+<div class="section" id="installing-the-latest-development-version">
+<h2>Installing the latest development version<a class="headerlink" href="#installing-the-latest-development-version" title="Permalink to this headline">¶</a></h2>
+<p>If you want the very latest code and features,
+you can install Fatiando directly from <a class="reference external" href="https://github.com/fatiando/fatiando">Github</a>.
+We try to maintain the <em>master</em> branch stable and
+<a class="reference external" href="https://travis-ci.org/fatiando/fatiando/branches">passing all tests</a>,
+so it should be safe to use.</p>
+<p>First, make sure you have all dependencies installed and a C compiler
+available (see the pip instructions above).
+To install the latest version from Github:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">fatiando</span><span class="o">/</span><span class="n">fatiando</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span><span class="n">master</span><span class="o">.</span><span class="n">zip</span>
+</pre></div>
+</div>
+<p>or if you have git installed and want to see the code:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">fatiando</span><span class="o">/</span><span class="n">fatiando</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">fatiando</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>Note that the <code class="docutils literal"><span class="pre">fatiando.__version__</span></code>  variable has the current version
+number. If you install from PyPI or conda-forge, this will be something like
+<code class="docutils literal"><span class="pre">'0.2'</span></code>. If you installed from Github, this will be the latest commit hash.
+This way you can track exactly what version of Fatiando generated your results.</p>
+</div>
+<div class="section" id="dependencies">
+<span id="id1"></span><h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Fatiando requires the following dependencies for running:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.numpy.org/">numpy</a></li>
+<li><a class="reference external" href="http://scipy.org/">scipy</a></li>
+<li><a class="reference external" href="http://numba.pydata.org/">numba</a></li>
+<li><a class="reference external" href="http://python-future.org/">future</a></li>
+<li><a class="reference external" href="http://matplotlib.org/">matplotlib</a></li>
+<li><a class="reference external" href="http://python-pillow.org/">pillow</a></li>
+</ul>
+<p>The following are also recommended but optional:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://jupyter.org/">Jupyter</a>: for running the Jupyter notebook and
+interactive widgets.</li>
+<li><a class="reference external" href="http://matplotlib.org/basemap/index.html">basemap</a>: matplotlib toolkit
+for plotting maps with projections.</li>
+<li><a class="reference external" href="http://code.enthought.com/projects/mayavi/">mayavi</a>: for 3D plotting.</li>
+</ul>
+<p>You can install all of these dependencies using <code class="docutils literal"><span class="pre">conda</span></code> by running the
+following command on a terminal (or <code class="docutils literal"><span class="pre">cmd.exe</span></code> on Windows):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">numpy</span> <span class="n">scipy</span> <span class="n">numba</span> <span class="n">future</span> <span class="n">matplotlib</span> <span class="n">pillow</span> <span class="n">jupyter</span> <span class="n">basemap</span> <span class="n">mayavi</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-the-install">
+<h2>Testing the install<a class="headerlink" href="#testing-the-install" title="Permalink to this headline">¶</a></h2>
+<p>You can test your install by running our test suite. We use <a class="reference external" href="http://pytest.org/">py.test</a> to
+manage our tests, so you&#8217;ll need to have it installed. You can do this by
+running <code class="docutils literal"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">pytest</span></code> if you use <code class="docutils literal"><span class="pre">conda</span></code> or <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pytest</span></code>
+if you use <code class="docutils literal"><span class="pre">pip</span></code>. After that, you can run the tests by running the following
+in the Python (or IPython) interpreter:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">fatiando</span>
+<span class="n">fatiando</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Alternatively, you can run the following from the command line (or
+<code class="docutils literal"><span class="pre">cmd.exe</span></code>):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;import fatiando; fatiando.test()&quot;</span>
+</pre></div>
+</div>
+<p>That should run all our automated tests (it might take a few minutes).</p>
+<p>Another way to test that Fatiando is working is to try running one of the
+recipes from the <a class="reference internal" href="gallery/index.html#gallery"><span class="std std-ref">Gallery</span></a> or <a class="reference internal" href="cookbook.html#cookbook"><span class="std std-ref">Cookbook</span></a>.</p>
+<p>If any of the tests fail or you get an error message or weird result from a
+recipe, please write to the <a class="reference external" href="https://groups.google.com/d/forum/fatiando">mailing list</a>.
+To make it easier for us to debug you problem, please include the following
+information:</p>
+<ul class="simple">
+<li>Operating system</li>
+<li>Version of Fatiando you installed</li>
+<li>Python distribution (<a class="reference external" href="https://www.continuum.io/downloads">Anaconda</a>, <a class="reference external" href="http://code.enthought.com/projects/index.php">ETS/Canopy</a>, own install)</li>
+<li>Python version (2.6, 2.7, 3.3, 3.4, etc)</li>
+<li>The script you ran (and gave you an error/weird result)</li>
+<li>The error message (the part that says <code class="docutils literal"><span class="pre">Traceback:</span> <span class="pre">...</span></code>) or result (figure,
+numbers, etc)</li>
+</ul>
+<p><strong>We really appreciate the feedback</strong>! Reporting problems helps us try to make
+Fatiando better and easier to install.</p>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        <p class="pull-right">
+            <a href="#">Back to top</a>
+            
+                <br/>
+                
+<div id="sourcelink">
+  <a href="_sources/install.txt"
+     rel="nofollow">Source</a>
+</div>
+            
+        </p>
+
+        <p class="text-center">
+            &copy; Copyright 2010-2016, Leonardo Uieda.
+            Created using <a
+                href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+        </p>
+    </div>
+</footer>
+  </body>
+</html>

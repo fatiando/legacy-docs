@@ -1,0 +1,622 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fatiando.gravmag.eqlayer &#8212; Fatiando 0.5</title>
+    
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/font-awesome/css/font-awesome.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     'ac692aa892ddbb386f6a76d0f429099587eb2b37',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="Fatiando 0.5" href="../../../index.html" />
+    <link rel="up" title="fatiando" href="../../fatiando.html" />
+    
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-38125837-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head>
+  <body role="document">
+
+
+
+
+  <div id="navbar" class="navbar navbar-default navbar-default ">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html"><img src="../../../_static/fatiando-logo.png">
+          fatiando</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.5</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../install.html">Install</a></li>
+                <li><a href="../../../gallery/index.html">Gallery</a></li>
+                <li><a href="../../../api/fatiando.html">API</a></li>
+                <li><a href="../../../docs.html">Docs</a></li>
+                <li><a href="../../../develop.html">Contribute</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <h1>Source code for fatiando.gravmag.eqlayer</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Equivalent layer processing.</span>
+
+<span class="sd">Use the classes here to estimate an equivalent layer from potential field data.</span>
+<span class="sd">Then you can use the estimated layer to perform tranformations (gridding,</span>
+<span class="sd">continuation, derivation, reduction to the pole, etc.) by forward modeling</span>
+<span class="sd">the layer. Use :mod:`fatiando.gravmag.sphere` for forward modeling.</span>
+
+<span class="sd">**Algorithms**</span>
+
+<span class="sd">* :class:`~fatiando.gravmag.eqlayer.EQLGravity` and</span>
+<span class="sd">  :class:`~fatiando.gravmag.eqlayer.EQLTotalField`: The classic (space domain)</span>
+<span class="sd">  equivalent layer as formulated in Li and Oldenburg (2010) or</span>
+<span class="sd">  Oliveira Jr. et al (2012).</span>
+<span class="sd">  Doesn&#39;t have wavelet compression or other tweaks.</span>
+<span class="sd">* :class:`~fatiando.gravmag.eqlayer.PELGravity` and</span>
+<span class="sd">  :class:`~fatiando.gravmag.eqlayer.PELTotalField`: The polynomial equivalent</span>
+<span class="sd">  layer of Oliveira Jr. et al (2012). A fast and memory efficient algorithm.</span>
+<span class="sd">  Both of these require special regularization</span>
+<span class="sd">  (:class:`~fatiando.gravmag.eqlayer.PELSmoothness`).</span>
+
+<span class="sd">**References**</span>
+
+<span class="sd">Li, Y., and D. W. Oldenburg (2010), Rapid construction of equivalent sources</span>
+<span class="sd">using wavelets, Geophysics, 75(3), L51-L59, doi:10.1190/1.3378764.</span>
+
+<span class="sd">Oliveira Jr., V. C., V. C. F. Barbosa, and L. Uieda (2012), Polynomial</span>
+<span class="sd">equivalent layer, Geophysics, 78(1), G1-G13, doi:10.1190/geo2012-0196.1.</span>
+
+<span class="sd">----</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">future.builtins</span> <span class="k">import</span> <span class="nb">super</span><span class="p">,</span> <span class="nb">range</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">sphere</span> <span class="k">as</span> <span class="n">kernel</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">dircos</span><span class="p">,</span> <span class="n">safe_dot</span>
+<span class="kn">from</span> <span class="nn">..inversion</span> <span class="k">import</span> <span class="n">Misfit</span><span class="p">,</span> <span class="n">Smoothness</span>
+
+
+<div class="viewcode-block" id="EQLBase"><a class="viewcode-back" href="../../../api/gravmag.eqlayer.html#fatiando.gravmag.eqlayer.EQLBase">[docs]</a><span class="k">class</span> <span class="nc">EQLBase</span><span class="p">(</span><span class="n">Misfit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for the classic equivalent layer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">grid</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">nparams</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="n">islinear</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span>
+
+<div class="viewcode-block" id="EQLBase.predicted"><a class="viewcode-back" href="../../../api/gravmag.eqlayer.html#fatiando.gravmag.eqlayer.EQLBase.predicted">[docs]</a>    <span class="k">def</span> <span class="nf">predicted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the data predicted by a given parameter vector.</span>
+
+<span class="sd">        Parameters:</span>
+
+<span class="sd">        * p : 1d-array (optional)</span>
+<span class="sd">            The parameter vector with the estimated physical properties of the</span>
+<span class="sd">            layer. If not given, will use the value calculated by ``.fit()``.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        * result : 1d-array</span>
+<span class="sd">            The predicted data vector.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">safe_dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jacobian</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="n">p</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="EQLGravity"><a class="viewcode-back" href="../../../api/gravmag.eqlayer.html#fatiando.gravmag.eqlayer.EQLGravity">[docs]</a><span class="k">class</span> <span class="nc">EQLGravity</span><span class="p">(</span><span class="n">EQLBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Estimate an equivalent layer from gravity data.</span>
+
+<span class="sd">    .. note:: Assumes x = North, y = East, z = Down.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    * x, y, z : 1d-arrays</span>
+<span class="sd">        The x, y, z coordinates of each data point.</span>
+<span class="sd">    * data : 1d-array</span>
+<span class="sd">        The gravity data at each point.</span>
+<span class="sd">    * grid : :class:`~fatiando.mesher.PointGrid`</span>
+<span class="sd">        The sources in the equivalent layer. Will invert for the density of</span>
+<span class="sd">        each point in the grid.</span>
+<span class="sd">    * field : string</span>
+<span class="sd">        Which gravitational field is the data. Options are: ``&#39;gz&#39;`` (gravity</span>
+<span class="sd">        anomaly), ``&#39;gxx&#39;``, ``&#39;gxy&#39;``, ..., ``&#39;gzz&#39;`` (gravity gradient</span>
+<span class="sd">        tensor). Defaults to ``&#39;gz&#39;``.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;gz&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">grid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">field</span>
+
+<div class="viewcode-block" id="EQLGravity.jacobian"><a class="viewcode-back" href="../../../api/gravmag.eqlayer.html#fatiando.gravmag.eqlayer.EQLGravity.jacobian">[docs]</a>    <span class="k">def</span> <span class="nf">jacobian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the Jacobian matrix for a given parameter vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+        <span class="n">jac</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">ndata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nparams</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">):</span>
+            <span class="n">jac</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">dens</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jac</span></div></div>
+
+
+<div class="viewcode-block" id="EQLTotalField"><a class="viewcode-back" href="../../../api/gravmag.eqlayer.html#fatiando.gravmag.eqlayer.EQLTotalField">[docs]</a><span class="k">class</span> <span class="nc">EQLTotalField</span><span class="p">(</span><span class="n">EQLBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Estimate an equivalent layer from total field magnetic anomaly data.</span>
+
+<span class="sd">    .. note:: Assumes x = North, y = East, z = Down.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    * x, y, z : 1d-arrays</span>
+<span class="sd">        The x, y, z coordinates of each data point.</span>
+<span class="sd">    * data : 1d-array</span>
+<span class="sd">        The total field anomaly data at each point.</span>
+<span class="sd">    * inc, dec : floats</span>
+<span class="sd">        The inclination and declination of the inducing field</span>
+<span class="sd">    * grid : :class:`~fatiando.mesher.PointGrid`</span>
+<span class="sd">        The sources in the equivalent layer. Will invert for the magnetization</span>
+<span class="sd">        intensity of each point in the grid.</span>
+<span class="sd">    * sinc, sdec : None or floats</span>
+<span class="sd">        The inclination and declination of the equivalent layer. Use these if</span>
+<span class="sd">        there is remanent magnetization and the total magnetization of the</span>
+<span class="sd">        layer if different from the induced magnetization.</span>
+<span class="sd">        If there is only induced magnetization, use None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">sinc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sdec</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">grid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dec</span> <span class="o">=</span> <span class="n">inc</span><span class="p">,</span> <span class="n">dec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sinc</span> <span class="o">=</span> <span class="n">sinc</span> <span class="k">if</span> <span class="n">sinc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">inc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sdec</span> <span class="o">=</span> <span class="n">sdec</span> <span class="k">if</span> <span class="n">sdec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">dec</span>
+
+<div class="viewcode-block" id="EQLTotalField.jacobian"><a class="viewcode-back" href="../../../api/gravmag.eqlayer.html#fatiando.gravmag.eqlayer.EQLTotalField.jacobian">[docs]</a>    <span class="k">def</span> <span class="nf">jacobian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the Jacobian matrix for a given parameter vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span>
+        <span class="n">inc</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dec</span>
+        <span class="n">mag</span> <span class="o">=</span> <span class="n">dircos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sinc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sdec</span><span class="p">)</span>
+        <span class="n">jac</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">ndata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nparams</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">):</span>
+            <span class="n">jac</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">.</span><span class="n">tf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">inc</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">pmag</span><span class="o">=</span><span class="n">mag</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jac</span></div></div>
+
+
+<div class="viewcode-block" id="PELBase"><a class="viewcode-back" href="../../../api/gravmag.eqlayer.html#fatiando.gravmag.eqlayer.PELBase">[docs]</a><span class="k">class</span> <span class="nc">PELBase</span><span class="p">(</span><span class="n">EQLBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for the Polynomial Equivalent Layer.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        Overloads *fit* to convert the estimated coefficients to physical</span>
+<span class="sd">        properties. The coefficients are stored in the ``coeffs_`` attribute.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="n">degree</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">grid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nparams</span> <span class="o">=</span> <span class="n">windows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">windows</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">ncoeffs</span><span class="p">(</span><span class="n">degree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">windows</span> <span class="o">=</span> <span class="n">windows</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">degree</span> <span class="o">=</span> <span class="n">degree</span>
+
+<div class="viewcode-block" id="PELBase.fmt_estimate"><a class="viewcode-back" href="../../../api/gravmag.eqlayer.html#fatiando.gravmag.eqlayer.PELBase.fmt_estimate">[docs]</a>    <span class="k">def</span> <span class="nf">fmt_estimate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coefs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert the estimated polynomial coefficients to physical property</span>
+<span class="sd">        values along the layer.</span>
+
+<span class="sd">        Parameters:</span>
+
+<span class="sd">        * coefs : 1d-array</span>
+<span class="sd">            The estimated parameter vector with the polynomial coefficients</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        * estimate : 1d-array</span>
+<span class="sd">            The converted physical property values along the layer.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ny</span><span class="p">,</span> <span class="n">nx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">windows</span>
+        <span class="n">pergrid</span> <span class="o">=</span> <span class="n">ncoeffs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">degree</span><span class="p">)</span>
+        <span class="n">estimate</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">grids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">ystart</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">gny</span><span class="p">,</span> <span class="n">gnx</span> <span class="o">=</span> <span class="n">grids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ny</span><span class="p">):</span>
+            <span class="n">yend</span> <span class="o">=</span> <span class="n">ystart</span> <span class="o">+</span> <span class="n">gny</span>
+            <span class="n">xstart</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nx</span><span class="p">):</span>
+                <span class="n">xend</span> <span class="o">=</span> <span class="n">xstart</span> <span class="o">+</span> <span class="n">gnx</span>
+                <span class="n">g</span> <span class="o">=</span> <span class="n">grids</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                <span class="n">bk</span> <span class="o">=</span> <span class="n">_bkmatrix</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">degree</span><span class="p">)</span>
+                <span class="n">window_coefs</span> <span class="o">=</span> <span class="n">coefs</span><span class="p">[</span><span class="n">k</span> <span class="o">*</span> <span class="n">pergrid</span><span class="p">:(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">pergrid</span><span class="p">]</span>
+                <span class="n">window_props</span> <span class="o">=</span> <span class="n">safe_dot</span><span class="p">(</span><span class="n">bk</span><span class="p">,</span> <span class="n">window_coefs</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+                <span class="n">estimate</span><span class="p">[</span><span class="n">ystart</span><span class="p">:</span><span class="n">yend</span><span class="p">,</span> <span class="n">xstart</span><span class="p">:</span><span class="n">xend</span><span class="p">]</span> <span class="o">=</span> <span class="n">window_props</span>
+                <span class="n">xstart</span> <span class="o">=</span> <span class="n">xend</span>
+                <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">ystart</span> <span class="o">=</span> <span class="n">yend</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coeffs_</span> <span class="o">=</span> <span class="n">coefs</span>
+        <span class="k">return</span> <span class="n">estimate</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_bkmatrix</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">degree</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Make the Bk polynomial coefficient matrix for a given PointGrid.</span>
+
+<span class="sd">    This matrix converts the coefficients into physical property values.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    * grid : :class:`~fatiando.mesher.PointGrid`</span>
+<span class="sd">        The sources in the equivalent layer</span>
+<span class="sd">    * degree : int</span>
+<span class="sd">        The degree of the bivariate polynomial</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">    * bk : 2d-array</span>
+<span class="sd">        The matrix</span>
+
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    &gt;&gt;&gt; from fatiando.mesher import PointGrid</span>
+<span class="sd">    &gt;&gt;&gt; grid = PointGrid((0, 1, 0, 2), 10, (2, 2))</span>
+<span class="sd">    &gt;&gt;&gt; print _bkmatrix(grid, 2)</span>
+<span class="sd">    [[ 1.  0.  0.  0.  0.  0.]</span>
+<span class="sd">     [ 1.  2.  0.  4.  0.  0.]</span>
+<span class="sd">     [ 1.  0.  1.  0.  0.  1.]</span>
+<span class="sd">     [ 1.  2.  1.  4.  2.  1.]]</span>
+<span class="sd">    &gt;&gt;&gt; print _bkmatrix(grid, 1)</span>
+<span class="sd">    [[ 1.  0.  0.]</span>
+<span class="sd">     [ 1.  2.  0.]</span>
+<span class="sd">     [ 1.  0.  1.]</span>
+<span class="sd">     [ 1.  2.  1.]]</span>
+<span class="sd">    &gt;&gt;&gt; print _bkmatrix(grid, 3)</span>
+<span class="sd">    [[ 1.  0.  0.  0.  0.  0.  0.  0.  0.  0.]</span>
+<span class="sd">     [ 1.  2.  0.  4.  0.  0.  8.  0.  0.  0.]</span>
+<span class="sd">     [ 1.  0.  1.  0.  0.  1.  0.  0.  0.  1.]</span>
+<span class="sd">     [ 1.  2.  1.  4.  2.  1.  8.  4.  2.  1.]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bmatrix</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span>
+        <span class="p">[(</span><span class="n">grid</span><span class="o">.</span><span class="n">x</span><span class="o">**</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">y</span><span class="o">**</span><span class="n">j</span><span class="p">)</span>
+         <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">degree</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">l</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))])</span>
+    <span class="k">return</span> <span class="n">bmatrix</span>
+
+
+<div class="viewcode-block" id="ncoeffs"><a class="viewcode-back" href="../../../api/gravmag.eqlayer.html#fatiando.gravmag.eqlayer.ncoeffs">[docs]</a><span class="k">def</span> <span class="nf">ncoeffs</span><span class="p">(</span><span class="n">degree</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the number of coefficients in a bivarite polynomail.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    * degree : int</span>
+<span class="sd">        The degree of the polynomial</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">    * n : int</span>
+<span class="sd">        The number of coefficients</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    &gt;&gt;&gt; ncoeffs(1)</span>
+<span class="sd">    3</span>
+<span class="sd">    &gt;&gt;&gt; ncoeffs(2)</span>
+<span class="sd">    6</span>
+<span class="sd">    &gt;&gt;&gt; ncoeffs(3)</span>
+<span class="sd">    10</span>
+<span class="sd">    &gt;&gt;&gt; ncoeffs(4)</span>
+<span class="sd">    15</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">degree</span> <span class="o">+</span> <span class="mi">2</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="PELGravity"><a class="viewcode-back" href="../../../api/gravmag.eqlayer.html#fatiando.gravmag.eqlayer.PELGravity">[docs]</a><span class="k">class</span> <span class="nc">PELGravity</span><span class="p">(</span><span class="n">PELBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Estimate a polynomial equivalent layer from gravity data.</span>
+
+<span class="sd">    .. note:: Assumes x = North, y = East, z = Down.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    * x, y, z : 1d-arrays</span>
+<span class="sd">        The x, y, z coordinates of each data point.</span>
+<span class="sd">    * data : 1d-array</span>
+<span class="sd">        The gravity data at each point.</span>
+<span class="sd">    * grid : :class:`~fatiando.mesher.PointGrid`</span>
+<span class="sd">        The sources in the equivalent layer. Will invert for the density of</span>
+<span class="sd">        each point in the grid.</span>
+<span class="sd">    * windows : tuple = (ny, nx)</span>
+<span class="sd">        The number of windows that the layer will be divided in the y and x</span>
+<span class="sd">        directions, respectively</span>
+<span class="sd">    * degree : int</span>
+<span class="sd">        The degree of the bivariate polynomials used in each window of the PEL</span>
+<span class="sd">    * field : string</span>
+<span class="sd">        Which gravitational field is the data. Options are: ``&#39;gz&#39;`` (gravity</span>
+<span class="sd">        anomaly), ``&#39;gxx&#39;``, ``&#39;gxy&#39;``, ..., ``&#39;gzz&#39;`` (gravity gradient</span>
+<span class="sd">        tensor). Defaults to ``&#39;gz&#39;``.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="n">degree</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;gz&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="n">degree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">field</span>
+
+<div class="viewcode-block" id="PELGravity.jacobian"><a class="viewcode-back" href="../../../api/gravmag.eqlayer.html#fatiando.gravmag.eqlayer.PELGravity.jacobian">[docs]</a>    <span class="k">def</span> <span class="nf">jacobian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the Jacobian matrix for a given parameter vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+        <span class="n">grids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">)</span>
+        <span class="n">pergrid</span> <span class="o">=</span> <span class="n">ncoeffs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">degree</span><span class="p">)</span>
+        <span class="n">jac</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">ndata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nparams</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">gk</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">ndata</span><span class="p">,</span> <span class="n">grids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">grid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grids</span><span class="p">):</span>
+            <span class="n">bk</span> <span class="o">=</span> <span class="n">_bkmatrix</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">degree</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+                <span class="n">gk</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">dens</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+            <span class="n">jac</span><span class="p">[:,</span> <span class="n">i</span><span class="o">*</span><span class="n">pergrid</span><span class="p">:(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">pergrid</span><span class="p">]</span> <span class="o">=</span> <span class="n">safe_dot</span><span class="p">(</span><span class="n">gk</span><span class="p">,</span> <span class="n">bk</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jac</span></div></div>
+
+
+<div class="viewcode-block" id="PELTotalField"><a class="viewcode-back" href="../../../api/gravmag.eqlayer.html#fatiando.gravmag.eqlayer.PELTotalField">[docs]</a><span class="k">class</span> <span class="nc">PELTotalField</span><span class="p">(</span><span class="n">PELBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Estimate a polynomial equivalent layer from magnetic total field anomaly.</span>
+
+<span class="sd">    .. note:: Assumes x = North, y = East, z = Down.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    * x, y, z : 1d-arrays</span>
+<span class="sd">        The x, y, z coordinates of each data point.</span>
+<span class="sd">    * data : 1d-array</span>
+<span class="sd">        The total field magnetic anomaly data at each point.</span>
+<span class="sd">    * inc, dec : floats</span>
+<span class="sd">        The inclination and declination of the inducing field</span>
+<span class="sd">    * grid : :class:`~fatiando.mesher.PointGrid`</span>
+<span class="sd">        The sources in the equivalent layer. Will invert for the magnetization</span>
+<span class="sd">        intensity of each point in the grid.</span>
+<span class="sd">    * windows : tuple = (ny, nx)</span>
+<span class="sd">        The number of windows that the layer will be divided in the y and x</span>
+<span class="sd">        directions, respectively</span>
+<span class="sd">    * degree : int</span>
+<span class="sd">        The degree of the bivariate polynomials used in each window of the PEL</span>
+<span class="sd">    * sinc, sdec : None or floats</span>
+<span class="sd">        The inclination and declination of the equivalent layer. Use these if</span>
+<span class="sd">        there is remanent magnetization and the total magnetization of the</span>
+<span class="sd">        layer if different from the induced magnetization.</span>
+<span class="sd">        If there is only induced magnetization, use None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="n">degree</span><span class="p">,</span>
+                 <span class="n">sinc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sdec</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="n">degree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dec</span> <span class="o">=</span> <span class="n">inc</span><span class="p">,</span> <span class="n">dec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sinc</span> <span class="o">=</span> <span class="n">sinc</span> <span class="k">if</span> <span class="n">sinc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">inc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sdec</span> <span class="o">=</span> <span class="n">sdec</span> <span class="k">if</span> <span class="n">sdec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">dec</span>
+
+<div class="viewcode-block" id="PELTotalField.jacobian"><a class="viewcode-back" href="../../../api/gravmag.eqlayer.html#fatiando.gravmag.eqlayer.PELTotalField.jacobian">[docs]</a>    <span class="k">def</span> <span class="nf">jacobian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the Jacobian matrix for a given parameter vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span>
+        <span class="n">inc</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dec</span>
+        <span class="n">mag</span> <span class="o">=</span> <span class="n">dircos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sinc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sdec</span><span class="p">)</span>
+        <span class="n">grids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">)</span>
+        <span class="n">pergrid</span> <span class="o">=</span> <span class="n">ncoeffs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">degree</span><span class="p">)</span>
+        <span class="n">jac</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">ndata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nparams</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">gk</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">ndata</span><span class="p">,</span> <span class="n">grids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">grid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grids</span><span class="p">):</span>
+            <span class="n">bk</span> <span class="o">=</span> <span class="n">_bkmatrix</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">degree</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+                <span class="n">gk</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">.</span><span class="n">tf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">inc</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">pmag</span><span class="o">=</span><span class="n">mag</span><span class="p">)</span>
+            <span class="n">jac</span><span class="p">[:,</span> <span class="n">i</span><span class="o">*</span><span class="n">pergrid</span><span class="p">:(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">pergrid</span><span class="p">]</span> <span class="o">=</span> <span class="n">safe_dot</span><span class="p">(</span><span class="n">gk</span><span class="p">,</span> <span class="n">bk</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jac</span></div></div>
+
+
+<div class="viewcode-block" id="PELSmoothness"><a class="viewcode-back" href="../../../api/gravmag.eqlayer.html#fatiando.gravmag.eqlayer.PELSmoothness">[docs]</a><span class="k">class</span> <span class="nc">PELSmoothness</span><span class="p">(</span><span class="n">Smoothness</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Regularization to &quot;join&quot; neighboring windows in the PEL.</span>
+
+<span class="sd">    Use this with :class:`~fatiando.gravmag.eqlayer.PELGravity` and</span>
+<span class="sd">    :class:`~fatiando.gravmag.eqlayer.PELTotalField`.</span>
+
+<span class="sd">    Parameters passed to PELSmoothness must be the same as passed to the PEL</span>
+<span class="sd">    solvers.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    * grid : :class:`~fatiando.mesher.PointGrid`</span>
+<span class="sd">        The sources in the equivalent layer.</span>
+<span class="sd">    * windows : tuple = (ny, nx)</span>
+<span class="sd">        The number of windows that the layer will be divided in the y and x</span>
+<span class="sd">        directions, respectively.</span>
+<span class="sd">    * degree : int</span>
+<span class="sd">        The degree of the bivariate polynomials used in each window of the PEL</span>
+
+<span class="sd">    See the docstring of :class:`~fatiando.gravmag.eqlayer.PELGravity` for an</span>
+<span class="sd">    example usage.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="n">degree</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">_pel_fdmatrix</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">degree</span><span class="p">))</span></div>
+
+
+<span class="k">def</span> <span class="nf">_pel_fdmatrix</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">degree</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Makes the finite difference matrix for PEL smoothness.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ny</span><span class="p">,</span> <span class="n">nx</span> <span class="o">=</span> <span class="n">windows</span>
+    <span class="n">grids</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">windows</span><span class="p">)</span>
+    <span class="n">gsize</span> <span class="o">=</span> <span class="n">grids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">gny</span><span class="p">,</span> <span class="n">gnx</span> <span class="o">=</span> <span class="n">grids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">nderivs</span> <span class="o">=</span> <span class="p">(</span><span class="n">nx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">ny</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">rmatrix</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">lil_matrix</span><span class="p">((</span><span class="n">nderivs</span><span class="p">,</span> <span class="n">grid</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+    <span class="n">deriv</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># derivatives in x</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">grids</span><span class="p">)</span> <span class="o">-</span> <span class="n">ny</span><span class="p">):</span>
+        <span class="n">bottom</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">gsize</span> <span class="o">+</span> <span class="n">gny</span> <span class="o">*</span> <span class="p">(</span><span class="n">gnx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">top</span> <span class="o">=</span> <span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="n">ny</span><span class="p">)</span> <span class="o">*</span> <span class="n">gsize</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gny</span><span class="p">):</span>
+            <span class="n">rmatrix</span><span class="p">[</span><span class="n">deriv</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>
+            <span class="n">rmatrix</span><span class="p">[</span><span class="n">deriv</span><span class="p">,</span> <span class="n">top</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span>
+            <span class="n">deriv</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="c1"># derivatives in y</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">grids</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">ny</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">gsize</span> <span class="o">+</span> <span class="n">gny</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">gsize</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gnx</span><span class="p">):</span>
+            <span class="n">rmatrix</span><span class="p">[</span><span class="n">deriv</span><span class="p">,</span> <span class="n">right</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">gny</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>
+            <span class="n">rmatrix</span><span class="p">[</span><span class="n">deriv</span><span class="p">,</span> <span class="n">left</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">gny</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span>
+            <span class="n">deriv</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">rmatrix</span> <span class="o">=</span> <span class="n">rmatrix</span><span class="o">.</span><span class="n">tocsr</span><span class="p">()</span>
+    <span class="c1"># Make the RB matrix because R is for the sources, B converts it to</span>
+    <span class="c1"># coefficients.</span>
+    <span class="n">pergrid</span> <span class="o">=</span> <span class="n">ncoeffs</span><span class="p">(</span><span class="n">degree</span><span class="p">)</span>
+    <span class="n">ncoefs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grids</span><span class="p">)</span> <span class="o">*</span> <span class="n">pergrid</span>
+    <span class="n">fdmatrix</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nderivs</span><span class="p">,</span> <span class="n">ncoefs</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">st</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grids</span><span class="p">):</span>
+        <span class="n">bk</span> <span class="o">=</span> <span class="n">_bkmatrix</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">degree</span><span class="p">)</span>
+        <span class="n">en</span> <span class="o">=</span> <span class="n">st</span> <span class="o">+</span> <span class="n">g</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">fdmatrix</span><span class="p">[:,</span> <span class="n">i</span><span class="o">*</span><span class="n">pergrid</span><span class="p">:(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">pergrid</span><span class="p">]</span> <span class="o">=</span> <span class="n">safe_dot</span><span class="p">(</span><span class="n">rmatrix</span><span class="p">[:,</span> <span class="n">st</span><span class="p">:</span><span class="n">en</span><span class="p">],</span>
+                                                          <span class="n">bk</span><span class="p">)</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">en</span>
+    <span class="k">return</span> <span class="n">fdmatrix</span>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        <p class="pull-right">
+            <a href="#">Back to top</a>
+            
+                <br/>
+                
+            
+        </p>
+
+        <p class="text-center">
+            &copy; Copyright 2010-2016, Leonardo Uieda.
+            Created using <a
+                href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+        </p>
+    </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Example Gallery &#8212; Fatiando 0.5</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.2.0/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'ac692aa892ddbb386f6a76d0f429099587eb2b37',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Fatiando 0.5" href="../index.html" />
+    <link rel="next" title="Tilt angle of magnetic anomalies" href="gravmag/tilt_angle.html" />
+    <link rel="prev" title="Geothermal: Climate signal: What happens when assuming a climate change is linear, when in fact it was abrupt?" href="../cookbook/geothermal_climsig_wrong.html" />
+    
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-38125837-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head>
+  <body role="document">
+
+
+
+
+  <div id="navbar" class="navbar navbar-default navbar-default ">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img src="../_static/fatiando-logo.png">
+          fatiando</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.5</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../install.html">Install</a></li>
+                <li><a href="#">Gallery</a></li>
+                <li><a href="../api/fatiando.html">API</a></li>
+                <li><a href="../docs.html">Docs</a></li>
+                <li><a href="../develop.html">Contribute</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Example Gallery</a><ul>
+<li><a class="reference internal" href="#gravity-and-magnetics">Gravity and magnetics</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#grid-generation-and-manipulation">Grid generation and manipulation</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#seismology-and-seismics">Seismology and seismics</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#visualization">Visualization</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="col-md-9">
+      
+  <div class="section" id="example-gallery">
+<span id="gallery"></span><h1>Example Gallery<a class="headerlink" href="#example-gallery" title="Permalink to this headline">¶</a></h1>
+<p>Click on any image below to see a full sized image and the code that generated
+it, with links to download the code as a Python <code class="docutils literal"><span class="pre">.py</span></code> script or as a
+<a class="reference external" href="http://jupyter.org/">Jupyter</a> (formerly IPython) notebook.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The Gallery is a work in progress. We need <strong>your help</strong> to make it
+better! You can contribute by sending us your scripts for beautiful plots.
+Write to the <a class="reference external" href="https://groups.google.com/d/forum/fatiando">mailing list</a>
+or send us a
+<a class="reference external" href="https://github.com/fatiando/fatiando/pulls">pull request on Github</a>.</p>
+</div>
+<div style='clear:both'></div><div class="section" id="gravity-and-magnetics">
+<h2>Gravity and magnetics<a class="headerlink" href="#gravity-and-magnetics" title="Permalink to this headline">¶</a></h2>
+<div class="sphx-glr-thumbcontainer" tooltip="The tilt angle is a useful transformation of potential field data for boundary detection. It is..."><div class="figure" id="id1">
+<img alt="../_images/sphx_glr_tilt_angle_thumb.png" src="../_images/sphx_glr_tilt_angle_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="gravmag/tilt_angle.html#sphx-glr-gallery-gravmag-tilt-angle-py"><span class="std std-ref">Tilt angle of magnetic anomalies</span></a></span></p>
+</div>
+</div><div class="toctree-wrapper compound">
+</div>
+<div class="sphx-glr-thumbcontainer" tooltip="The equivalent layer is one of the best methods for griding and upward continuing gravity data ..."><div class="figure" id="id2">
+<img alt="../_images/sphx_glr_eqlayer_transform_thumb.png" src="../_images/sphx_glr_eqlayer_transform_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="gravmag/eqlayer_transform.html#sphx-glr-gallery-gravmag-eqlayer-transform-py"><span class="std std-ref">Equivalent layer for griding and upward-continuing gravity data</span></a></span></p>
+</div>
+</div><div class="toctree-wrapper compound">
+</div>
+<div class="sphx-glr-thumbcontainer" tooltip="Euler deconvolution with a moving window ----------------------------------------"><div class="figure" id="id3">
+<img alt="../_images/sphx_glr_euler_moving_window_thumb.png" src="../_images/sphx_glr_euler_moving_window_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="gravmag/euler_moving_window.html#sphx-glr-gallery-gravmag-euler-moving-window-py"><span class="std std-ref">Euler deconvolution with a moving window</span></a></span></p>
+</div>
+</div><div class="toctree-wrapper compound">
+</div>
+<div class="sphx-glr-thumbcontainer" tooltip="The equivalent layer can be used to reduce magnetic data to the pole. One of the main advantage..."><div class="figure" id="id4">
+<img alt="../_images/sphx_glr_eqlayer_mag_transform_thumb.png" src="../_images/sphx_glr_eqlayer_mag_transform_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="gravmag/eqlayer_mag_transform.html#sphx-glr-gallery-gravmag-eqlayer-mag-transform-py"><span class="std std-ref">Equivalent layer for reduction to the pole of magnetic data</span></a></span></p>
+</div>
+</div><div class="toctree-wrapper compound">
+</div>
+<div class="sphx-glr-thumbcontainer" tooltip="The usual approach to Euler deconvolution using a :ref:`moving window scheme <gallery_euler_mw>..."><div class="figure" id="id5">
+<img alt="../_images/sphx_glr_euler_expanding_window_thumb.png" src="../_images/sphx_glr_euler_expanding_window_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="gravmag/euler_expanding_window.html#sphx-glr-gallery-gravmag-euler-expanding-window-py"><span class="std std-ref">Euler deconvolution with expanding windows</span></a></span></p>
+</div>
+</div><div class="toctree-wrapper compound">
+</div>
+<div style='clear:both'></div></div>
+<div class="section" id="grid-generation-and-manipulation">
+<h2>Grid generation and manipulation<a class="headerlink" href="#grid-generation-and-manipulation" title="Permalink to this headline">¶</a></h2>
+<div class="sphx-glr-thumbcontainer" tooltip="You can create the (x, y, z) coordinate arrays for regular grids using :func:`fatiando.gridder...."><div class="figure" id="id6">
+<img alt="../_images/sphx_glr_regular_grid_thumb.png" src="../_images/sphx_glr_regular_grid_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="gridder/regular_grid.html#sphx-glr-gallery-gridder-regular-grid-py"><span class="std std-ref">Regular grids</span></a></span></p>
+</div>
+</div><div class="toctree-wrapper compound">
+</div>
+<div class="sphx-glr-thumbcontainer" tooltip="You can create the (x, y, z) coordinate arrays for a random scatter of points using :func:`fati..."><div class="figure" id="id7">
+<img alt="../_images/sphx_glr_point_scatter_thumb.png" src="../_images/sphx_glr_point_scatter_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="gridder/point_scatter.html#sphx-glr-gallery-gridder-point-scatter-py"><span class="std std-ref">Point scatters</span></a></span></p>
+</div>
+</div><div class="toctree-wrapper compound">
+</div>
+<div style='clear:both'></div></div>
+<div class="section" id="seismology-and-seismics">
+<h2>Seismology and seismics<a class="headerlink" href="#seismology-and-seismics" title="Permalink to this headline">¶</a></h2>
+<div class="sphx-glr-thumbcontainer" tooltip="The simplest way to get a seismogram (in time x offset) is through the convolutional model"><div class="figure" id="id8">
+<img alt="../_images/sphx_glr_convolutional_model_thumb.png" src="../_images/sphx_glr_convolutional_model_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="seismic/convolutional_model.html#sphx-glr-gallery-seismic-convolutional-model-py"><span class="std std-ref">Synthetic seismograms using the convolutional model</span></a></span></p>
+</div>
+</div><div class="toctree-wrapper compound">
+</div>
+<div class="sphx-glr-thumbcontainer" tooltip="A very simplified way of playing around with tomography is through a straight-ray approximation..."><div class="figure" id="id9">
+<img alt="../_images/sphx_glr_srtomo_regularized_thumb.png" src="../_images/sphx_glr_srtomo_regularized_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="seismic/srtomo_regularized.html#sphx-glr-gallery-seismic-srtomo-regularized-py"><span class="std std-ref">Straight-ray toy tomography with different regularization</span></a></span></p>
+</div>
+</div><div class="toctree-wrapper compound">
+</div>
+<div style='clear:both'></div></div>
+<div class="section" id="visualization">
+<h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h2>
+<div class="sphx-glr-thumbcontainer" tooltip="One way to plot seismic data is using black and white wiggles. Function :func:`fatiando.vis.mpl..."><div class="figure" id="id10">
+<img alt="../_images/sphx_glr_seismic-wiggle_thumb.png" src="../_images/sphx_glr_seismic-wiggle_thumb.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="vis/seismic-wiggle.html#sphx-glr-gallery-vis-seismic-wiggle-py"><span class="std std-ref">Plotting seismic data with wiggles</span></a></span></p>
+</div>
+</div><div class="toctree-wrapper compound">
+</div>
+<div style='clear:both'></div><div class="sphx-glr-footer container">
+<div class="sphx-glr-download container">
+<a class="reference download internal" href="../_downloads/gallery_python.zip" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">all</span> <span class="pre">examples</span> <span class="pre">in</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">gallery_python.zip</span></code></a></div>
+<div class="sphx-glr-download container">
+<a class="reference download internal" href="../_downloads/gallery_jupyter.zip" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">all</span> <span class="pre">examples</span> <span class="pre">in</span> <span class="pre">Jupyter</span> <span class="pre">notebooks:</span> <span class="pre">gallery_jupyter.zip</span></code></a></div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="http://sphinx-gallery.readthedocs.io">Generated by Sphinx-Gallery</a></p>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        <p class="pull-right">
+            <a href="#">Back to top</a>
+            
+                <br/>
+                
+<div id="sourcelink">
+  <a href="../_sources/gallery/index.txt"
+     rel="nofollow">Source</a>
+</div>
+            
+        </p>
+
+        <p class="text-center">
+            &copy; Copyright 2010-2016, Leonardo Uieda.
+            Created using <a
+                href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+        </p>
+    </div>
+</footer>
+  </body>
+</html>

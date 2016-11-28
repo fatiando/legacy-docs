@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Euler deconvolution with a moving window &#8212; Fatiando 0.5</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/gallery.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.2.0/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/font-awesome/css/font-awesome.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'ac692aa892ddbb386f6a76d0f429099587eb2b37',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Fatiando 0.5" href="../../index.html" />
+    <link rel="up" title="Example Gallery" href="../index.html" />
+    <link rel="next" title="Equivalent layer for reduction to the pole of magnetic data" href="eqlayer_mag_transform.html" />
+    <link rel="prev" title="Equivalent layer for griding and upward-continuing gravity data" href="eqlayer_transform.html" />
+    
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-38125837-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head>
+  <body role="document">
+
+
+
+
+  <div id="navbar" class="navbar navbar-default navbar-default ">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html"><img src="../../_static/fatiando-logo.png">
+          fatiando</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.5</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../install.html">Install</a></li>
+                <li><a href="../index.html">Gallery</a></li>
+                <li><a href="../../api/fatiando.html">API</a></li>
+                <li><a href="../../docs.html">Docs</a></li>
+                <li><a href="../../develop.html">Contribute</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="euler-deconvolution-with-a-moving-window">
+<span id="gallery-euler-mw"></span><span id="sphx-glr-gallery-gravmag-euler-moving-window-py"></span><h1>Euler deconvolution with a moving window<a class="headerlink" href="#euler-deconvolution-with-a-moving-window" title="Permalink to this headline">¶</a></h1>
+<p>Euler deconvolution attempts to estimate the coordinates of simple (idealized)
+sources from the input potential field data. There is a strong assumption that
+the sources have simple geometries, like spheres, vertical pipes, vertical
+planes, etc. So it wouldn&#8217;t be much of a surprise if the solutions aren&#8217;t great
+when sources are complex.</p>
+<p>Let&#8217;s test the Euler deconvolution using a moving window scheme, a very common
+approach used in all industry software. This is implemented in
+<a class="reference internal" href="../../api/gravmag.euler.html#fatiando.gravmag.euler.EulerDeconvMW" title="fatiando.gravmag.euler.EulerDeconvMW"><code class="xref py py-class docutils literal"><span class="pre">fatiando.gravmag.euler.EulerDeconvMW</span></code></a>.</p>
+<img alt="../../_images/sphx_glr_euler_moving_window_001.png" class="align-center" src="../../_images/sphx_glr_euler_moving_window_001.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Centers</span> <span class="n">of</span> <span class="n">the</span> <span class="n">model</span> <span class="n">spheres</span><span class="p">:</span>
+<span class="p">[</span><span class="o">-</span><span class="mi">1000</span> <span class="o">-</span><span class="mi">1000</span>  <span class="mi">1500</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">1000</span> <span class="mi">1500</span> <span class="mi">1000</span><span class="p">]</span>
+<span class="n">Kept</span> <span class="n">Euler</span> <span class="n">solutions</span> <span class="n">after</span> <span class="n">the</span> <span class="n">moving</span> <span class="n">window</span> <span class="n">scheme</span><span class="p">:</span>
+<span class="p">[[</span> <span class="mf">1005.02117863</span>  <span class="mf">1555.11042642</span>   <span class="mf">998.68593456</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">1042.92870628</span>  <span class="mf">1479.25104857</span>   <span class="mf">982.8034785</span> <span class="p">]</span>
+ <span class="p">[</span> <span class="o">-</span><span class="mf">903.03736426</span>  <span class="o">-</span><span class="mf">826.2551998</span>   <span class="mf">1580.03357152</span><span class="p">]</span>
+ <span class="p">[</span> <span class="o">-</span><span class="mf">996.30379977</span>  <span class="o">-</span><span class="mf">940.33986512</span>  <span class="mf">1459.01039032</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">1159.1957134</span>   <span class="mf">1006.77185575</span>  <span class="mf">1199.42292819</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">1465.17965473</span>   <span class="mf">408.39773001</span>  <span class="mf">1920.31472105</span><span class="p">]</span>
+ <span class="p">[</span>  <span class="mf">991.40325194</span>  <span class="mf">1468.18742261</span>  <span class="mf">1020.67590594</span><span class="p">]</span>
+ <span class="p">[</span> <span class="o">-</span><span class="mf">966.01139554</span>  <span class="o">-</span><span class="mf">775.38064946</span>  <span class="mf">1465.22351287</span><span class="p">]</span>
+ <span class="p">[</span><span class="o">-</span><span class="mf">1041.3450269</span>   <span class="o">-</span><span class="mf">971.09938734</span>  <span class="mf">1500.22185195</span><span class="p">]</span>
+ <span class="p">[</span> <span class="o">-</span><span class="mf">284.04967711</span>  <span class="o">-</span><span class="mf">382.06786678</span>  <span class="mf">2243.58685856</span><span class="p">]</span>
+ <span class="p">[</span>  <span class="o">-</span><span class="mf">35.58602726</span>  <span class="o">-</span><span class="mf">108.90046998</span>  <span class="mf">1540.68712849</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">1058.8441761</span>   <span class="mf">1516.37801553</span>   <span class="mf">994.86866767</span><span class="p">]</span>
+ <span class="p">[</span>  <span class="mf">999.08320679</span>  <span class="mf">1580.06304764</span>  <span class="mf">1051.97367365</span><span class="p">]</span>
+ <span class="p">[</span> <span class="o">-</span><span class="mf">933.90137199</span>  <span class="o">-</span><span class="mf">995.14775353</span>  <span class="mf">1406.97615438</span><span class="p">]</span>
+ <span class="p">[</span>  <span class="mf">381.76290333</span>  <span class="mf">1131.68128707</span>   <span class="mf">992.51158521</span><span class="p">]</span>
+ <span class="p">[</span>  <span class="mf">914.43334205</span>  <span class="mf">1475.15646829</span>   <span class="mf">978.0510579</span> <span class="p">]</span>
+ <span class="p">[</span> <span class="mf">1277.82392557</span>  <span class="mf">1876.41150747</span>   <span class="mf">931.05131937</span><span class="p">]</span>
+ <span class="p">[</span><span class="o">-</span><span class="mf">1017.82794862</span> <span class="o">-</span><span class="mf">1140.04437429</span>  <span class="mf">1560.46288409</span><span class="p">]</span>
+ <span class="p">[</span> <span class="o">-</span><span class="mf">991.58404782</span> <span class="o">-</span><span class="mf">1012.73293178</span>  <span class="mf">1556.74635058</span><span class="p">]</span>
+ <span class="p">[</span> <span class="o">-</span><span class="mf">349.91796733</span>   <span class="mf">355.56106336</span>  <span class="mf">1792.13495774</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">fatiando.gravmag</span> <span class="kn">import</span> <span class="n">sphere</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">euler</span>
+<span class="kn">from</span> <span class="nn">fatiando</span> <span class="kn">import</span> <span class="n">gridder</span><span class="p">,</span> <span class="n">utils</span><span class="p">,</span> <span class="n">mesher</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Make some synthetic magnetic data to test our Euler deconvolution.</span>
+<span class="c1"># The regional field</span>
+<span class="n">inc</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="o">-</span><span class="mi">45</span><span class="p">,</span> <span class="mi">0</span>
+<span class="c1"># Make a model of two spheres magnetized by induction only</span>
+<span class="n">model</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">mesher</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">1000</span><span class="p">,</span> <span class="n">y</span><span class="o">=-</span><span class="mi">1000</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">1500</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                  <span class="n">props</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;magnetization&#39;</span><span class="p">:</span> <span class="n">utils</span><span class="o">.</span><span class="n">ang2vec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">dec</span><span class="p">)}),</span>
+    <span class="n">mesher</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1500</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                  <span class="n">props</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;magnetization&#39;</span><span class="p">:</span> <span class="n">utils</span><span class="o">.</span><span class="n">ang2vec</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">dec</span><span class="p">)})]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Centers of the model spheres:&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
+
+<span class="c1"># Generate some magnetic data from the model</span>
+<span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">area</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">]</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">gridder</span><span class="o">.</span><span class="n">regular</span><span class="p">(</span><span class="n">area</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">150</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">sphere</span><span class="o">.</span><span class="n">tf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">dec</span><span class="p">)</span>
+
+<span class="c1"># We also need the derivatives of our data</span>
+<span class="n">xderiv</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">derivx</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+<span class="n">yderiv</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">derivy</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+<span class="n">zderiv</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">derivz</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Now we can run our Euler deconv solver on a moving window over the data.</span>
+<span class="c1"># Each window will produce an estimated point for the source.</span>
+<span class="c1"># We use a structural index of 3 to indicate that we think the sources are</span>
+<span class="c1"># spheres.</span>
+
+<span class="c1"># Run the Euler deconvolution on moving windows to produce a set of solutions</span>
+<span class="c1"># by running the solver on 10 x 10 windows of size 1000 x 1000 m</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">euler</span><span class="o">.</span><span class="n">EulerDeconvMW</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">xderiv</span><span class="p">,</span> <span class="n">yderiv</span><span class="p">,</span> <span class="n">zderiv</span><span class="p">,</span>
+                             <span class="n">structural_index</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">windows</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+                             <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
+<span class="c1"># Use the fit() method to obtain the estimates</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c1"># The estimated positions are stored as a list of [x, y, z] coordinates</span>
+<span class="c1"># (actually a 2D numpy array)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Kept Euler solutions after the moving window scheme:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">estimate_</span><span class="p">)</span>
+
+<span class="c1"># Plot the solutions on top of the magnetic data. Remember that the true depths</span>
+<span class="c1"># of the center of these sources is 1500 m and 1000 m.</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Euler deconvolution with a moving window&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">),</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">),</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">),</span> <span class="mi">30</span><span class="p">,</span>
+             <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">estimate_</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">solver</span><span class="o">.</span><span class="n">estimate_</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">solver</span><span class="o">.</span><span class="n">estimate_</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;cubehelix&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pad</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;Depth (m)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">area</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">area</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  0.220 seconds)</p>
+<div class="sphx-glr-footer container">
+<div class="sphx-glr-download container">
+<a class="reference download internal" href="../../_downloads/euler_moving_window.py" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">euler_moving_window.py</span></code></a></div>
+<div class="sphx-glr-download container">
+<a class="reference download internal" href="../../_downloads/euler_moving_window.ipynb" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">euler_moving_window.ipynb</span></code></a></div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="http://sphinx-gallery.readthedocs.io">Generated by Sphinx-Gallery</a></p>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        <p class="pull-right">
+            <a href="#">Back to top</a>
+            
+                <br/>
+                
+<div id="sourcelink">
+  <a href="../../_sources/gallery/gravmag/euler_moving_window.txt"
+     rel="nofollow">Source</a>
+</div>
+            
+        </p>
+
+        <p class="text-center">
+            &copy; Copyright 2010-2016, Leonardo Uieda.
+            Created using <a
+                href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+        </p>
+    </div>
+</footer>
+  </body>
+</html>

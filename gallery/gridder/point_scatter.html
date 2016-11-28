@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Point scatters &#8212; Fatiando 0.5</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/gallery.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.2.0/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/font-awesome/css/font-awesome.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'ac692aa892ddbb386f6a76d0f429099587eb2b37',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Fatiando 0.5" href="../../index.html" />
+    <link rel="up" title="Example Gallery" href="../index.html" />
+    <link rel="next" title="Synthetic seismograms using the convolutional model" href="../seismic/convolutional_model.html" />
+    <link rel="prev" title="Regular grids" href="regular_grid.html" />
+    
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-38125837-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head>
+  <body role="document">
+
+
+
+
+  <div id="navbar" class="navbar navbar-default navbar-default ">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html"><img src="../../_static/fatiando-logo.png">
+          fatiando</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.5</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../install.html">Install</a></li>
+                <li><a href="../index.html">Gallery</a></li>
+                <li><a href="../../api/fatiando.html">API</a></li>
+                <li><a href="../../docs.html">Docs</a></li>
+                <li><a href="../../develop.html">Contribute</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="point-scatters">
+<span id="sphx-glr-gallery-gridder-point-scatter-py"></span><h1>Point scatters<a class="headerlink" href="#point-scatters" title="Permalink to this headline">¶</a></h1>
+<p>You can create the (x, y, z) coordinate arrays for a random scatter of points
+using <a class="reference internal" href="../../api/gridder.html#fatiando.gridder.scatter" title="fatiando.gridder.scatter"><code class="xref py py-func docutils literal"><span class="pre">fatiando.gridder.scatter</span></code></a>.</p>
+<img alt="../../_images/sphx_glr_point_scatter_001.png" class="align-center" src="../../_images/sphx_glr_point_scatter_001.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span> <span class="mf">3745.40118847</span>  <span class="mf">9507.1430641</span>   <span class="mf">7319.93941811</span>  <span class="mf">5986.58484197</span>  <span class="mf">1560.18640442</span>
+  <span class="mf">1559.94520336</span>   <span class="mf">580.83612168</span>  <span class="mf">8661.76145775</span>  <span class="mf">6011.15011743</span>  <span class="mf">7080.72577796</span>
+   <span class="mf">205.84494296</span>  <span class="mf">9699.09852162</span>  <span class="mf">8324.426408</span>    <span class="mf">2123.39110678</span>  <span class="mf">1818.24967207</span>
+  <span class="mf">1834.04509853</span>  <span class="mf">3042.4224296</span>   <span class="mf">5247.56431632</span>  <span class="mf">4319.45018642</span>  <span class="mf">2912.29140198</span>
+  <span class="mf">6118.52894722</span>  <span class="mf">1394.93860652</span>  <span class="mf">2921.44648535</span>  <span class="mf">3663.61843294</span>  <span class="mf">4560.69984217</span>
+  <span class="mf">7851.75961393</span>  <span class="mf">1996.73782158</span>  <span class="mf">5142.34438414</span>  <span class="mf">5924.14568862</span>   <span class="mf">464.5041272</span>
+  <span class="mf">6075.44851901</span>  <span class="mf">1705.24123687</span>   <span class="mf">650.51592985</span>  <span class="mf">9488.85537253</span>  <span class="mf">9656.32033075</span>
+  <span class="mf">8083.97348116</span>  <span class="mf">3046.13769173</span>   <span class="mf">976.72114006</span>  <span class="mf">6842.33026512</span>  <span class="mf">4401.5249374</span>
+  <span class="mf">1220.38234845</span>  <span class="mf">4951.76910111</span>   <span class="mf">343.88521115</span>  <span class="mf">9093.20402079</span>  <span class="mf">2587.799816</span>
+  <span class="mf">6625.22284354</span>  <span class="mf">3117.11076089</span>  <span class="mf">5200.68021178</span>  <span class="mf">5467.10279343</span>  <span class="mf">1848.54455526</span>
+  <span class="mf">9695.84627765</span>  <span class="mf">7751.32823361</span>  <span class="mf">9394.98941564</span>  <span class="mf">8948.27350428</span>  <span class="mf">5978.99978811</span>
+  <span class="mf">9218.74235023</span>   <span class="mf">884.92502052</span>  <span class="mf">1959.82862419</span>   <span class="mf">452.27288911</span>  <span class="mf">3253.30330763</span>
+  <span class="mf">3886.77289689</span>  <span class="mf">2713.49031774</span>  <span class="mf">8287.37509152</span>  <span class="mf">3567.53326694</span>  <span class="mf">2809.34509687</span>
+  <span class="mf">5426.96083158</span>  <span class="mf">1409.24224975</span>  <span class="mf">8021.96980754</span>   <span class="mf">745.5064368</span>   <span class="mf">9868.86936601</span>
+  <span class="mf">7722.44769297</span>  <span class="mf">1987.15681534</span>    <span class="mf">55.22117124</span>  <span class="mf">8154.61428455</span>  <span class="mf">7068.57343848</span>
+  <span class="mf">7290.07168041</span>  <span class="mf">7712.70346686</span>   <span class="mf">740.44651734</span>  <span class="mf">3584.65728544</span>  <span class="mf">1158.69059525</span>
+  <span class="mf">8631.03425876</span>  <span class="mf">6232.98126828</span>  <span class="mf">3308.98024853</span>   <span class="mf">635.58350286</span>  <span class="mf">3109.82321716</span>
+  <span class="mf">3251.83322027</span>  <span class="mf">7296.06178338</span>  <span class="mf">6375.57471355</span>  <span class="mf">8872.12742576</span>  <span class="mf">4722.14925162</span>
+  <span class="mf">1195.94245938</span>  <span class="mf">7132.44787223</span>  <span class="mf">7607.85048617</span>  <span class="mf">5612.77197569</span>  <span class="mf">7709.67179955</span>
+  <span class="mf">4937.95596364</span>  <span class="mf">5227.32829382</span>  <span class="mf">4275.41018359</span>   <span class="mf">254.19126744</span>  <span class="mf">1078.91426993</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">4685.70814313</span>  <span class="mf">1364.10411264</span> <span class="o">-</span><span class="mf">1856.44018924</span>    <span class="mf">85.70691165</span>  <span class="mf">4075.66473926</span>
+ <span class="o">-</span><span class="mf">2507.07770851</span>  <span class="o">-</span><span class="mf">896.17076964</span>  <span class="mf">2555.51138543</span> <span class="o">-</span><span class="mf">2712.01834508</span> <span class="o">-</span><span class="mf">4230.20090171</span>
+ <span class="o">-</span><span class="mf">2102.48547086</span> <span class="o">-</span><span class="mf">3387.78712746</span>  <span class="mf">4296.97652343</span>  <span class="mf">3081.20379564</span>  <span class="mf">1334.0375651</span>
+  <span class="mf">3714.60590188</span>  <span class="mf">3036.72076899</span> <span class="o">-</span><span class="mf">3134.29941114</span>  <span class="mf">3925.5899849</span>    <span class="mf">393.42241916</span>
+  <span class="mf">3074.40155164</span>  <span class="mf">3960.91299923</span> <span class="o">-</span><span class="mf">1819.96525028</span> <span class="o">-</span><span class="mf">3899.48075472</span> <span class="o">-</span><span class="mf">2720.64837458</span>
+  <span class="o">-</span><span class="mf">728.92211374</span>  <span class="mf">3180.14765922</span>  <span class="mf">3607.30583256</span> <span class="o">-</span><span class="mf">4930.47869469</span>   <span class="mf">107.47302578</span>
+  <span class="o">-</span><span class="mf">825.88996851</span> <span class="o">-</span><span class="mf">2778.92189529</span> <span class="o">-</span><span class="mf">3801.34632666</span> <span class="o">-</span><span class="mf">1623.84828596</span>  <span class="mf">4429.09703913</span>
+ <span class="o">-</span><span class="mf">1767.97067979</span>   <span class="mf">187.90621743</span>  <span class="mf">2030.18958895</span> <span class="o">-</span><span class="mf">1363.70397621</span>  <span class="mf">4717.82082721</span>
+  <span class="mf">4624.47294942</span> <span class="o">-</span><span class="mf">2482.17704175</span>   <span class="o">-</span><span class="mf">27.51494108</span> <span class="o">-</span><span class="mf">1991.21690183</span> <span class="o">-</span><span class="mf">2151.59505623</span>
+ <span class="o">-</span><span class="mf">4631.13052645</span>  <span class="mf">1095.6433398</span>     <span class="mf">26.79023229</span> <span class="o">-</span><span class="mf">4485.2124875</span>  <span class="o">-</span><span class="mf">2213.53535763</span>
+  <span class="mf">4082.65885967</span> <span class="o">-</span><span class="mf">2604.38109333</span> <span class="o">-</span><span class="mf">3551.05127909</span>  <span class="o">-</span><span class="mf">105.47239722</span>  <span class="mf">4856.50454111</span>
+ <span class="o">-</span><span class="mf">2579.44728488</span>  <span class="mf">1721.35547406</span>  <span class="mf">2616.19615329</span> <span class="o">-</span><span class="mf">2623.62456008</span>  <span class="mf">2282.16348612</span>
+ <span class="o">-</span><span class="mf">1322.16867281</span>  <span class="mf">1323.05830594</span>  <span class="mf">1335.29710761</span>   <span class="mf">357.74684075</span> <span class="o">-</span><span class="mf">4097.10229946</span>
+  <span class="mf">3353.02495589</span> <span class="o">-</span><span class="mf">1792.19935028</span> <span class="o">-</span><span class="mf">3134.814896</span>   <span class="o">-</span><span class="mf">4592.24858445</span>   <span class="mf">908.92943188</span>
+  <span class="mf">1775.64361842</span> <span class="o">-</span><span class="mf">4834.12171072</span>   <span class="mf">120.93058299</span> <span class="o">-</span><span class="mf">2735.04224802</span>  <span class="mf">1451.72790409</span>
+ <span class="o">-</span><span class="mf">3256.33570995</span>  <span class="mf">1909.37738102</span> <span class="o">-</span><span class="mf">1132.64653699</span>  <span class="mf">4367.29988737</span> <span class="o">-</span><span class="mf">3624.79055854</span>
+ <span class="o">-</span><span class="mf">1589.3364895</span>  <span class="o">-</span><span class="mf">3865.26478759</span>  <span class="mf">4246.93618279</span>  <span class="mf">3773.39353381</span> <span class="o">-</span><span class="mf">2420.58372285</span>
+  <span class="mf">1599.84046034</span>  <span class="mf">3172.22200201</span>   <span class="mf">552.00811599</span>   <span class="mf">296.50578356</span> <span class="o">-</span><span class="mf">2581.477091</span>
+ <span class="o">-</span><span class="mf">4068.97232194</span>  <span class="mf">3972.15757953</span>  <span class="mf">4004.18057163</span>  <span class="mf">1331.01457273</span> <span class="o">-</span><span class="mf">1609.70208951</span>
+ <span class="o">-</span><span class="mf">1507.90425387</span>  <span class="mf">2259.5567887</span>   <span class="mf">3971.10259953</span>  <span class="mf">3870.86424265</span>  <span class="mf">2798.75545858</span><span class="p">]</span>
+<span class="n">z</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span>
+ <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span>
+ <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span>
+ <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span>
+ <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span>
+ <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span>
+ <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span>
+ <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span>
+ <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span> <span class="o">-</span><span class="mf">150.</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">fatiando</span> <span class="kn">import</span> <span class="n">gridder</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Define the area where the points are generated in meters: [x1, x2, y1, y2]</span>
+<span class="n">area</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">10e3</span><span class="p">,</span> <span class="o">-</span><span class="mf">5e3</span><span class="p">,</span> <span class="mf">5e3</span><span class="p">]</span>
+
+<span class="c1"># The point scatter is generated from a uniform random distribution.</span>
+<span class="c1"># So running the scatter function twice will produce different results.</span>
+<span class="c1"># You can control this by passing a fixed seed value for the random number</span>
+<span class="c1"># generator.</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">gridder</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">area</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># x and y are 1d arrays with the coordinates of each point</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;x =&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;y =&#39;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Optionally, you can generate a 3rd array with constant z values</span>
+<span class="c1"># (remember that z is positive downward).</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">gridder</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">area</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">150</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;z =&#39;</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Point scatter&#39;</span><span class="p">)</span>
+<span class="c1"># In Fatiando, x is North and y is East.</span>
+<span class="c1"># So we should plot x in the vertical axis and y in horizontal.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;ok&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;y (m)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;x (m)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">6e3</span><span class="p">,</span> <span class="mf">6e3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1e3</span><span class="p">,</span> <span class="mf">11e3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  0.075 seconds)</p>
+<div class="sphx-glr-footer container">
+<div class="sphx-glr-download container">
+<a class="reference download internal" href="../../_downloads/point_scatter.py" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">point_scatter.py</span></code></a></div>
+<div class="sphx-glr-download container">
+<a class="reference download internal" href="../../_downloads/point_scatter.ipynb" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">point_scatter.ipynb</span></code></a></div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="http://sphinx-gallery.readthedocs.io">Generated by Sphinx-Gallery</a></p>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        <p class="pull-right">
+            <a href="#">Back to top</a>
+            
+                <br/>
+                
+<div id="sourcelink">
+  <a href="../../_sources/gallery/gridder/point_scatter.txt"
+     rel="nofollow">Source</a>
+</div>
+            
+        </p>
+
+        <p class="text-center">
+            &copy; Copyright 2010-2016, Leonardo Uieda.
+            Created using <a
+                href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+        </p>
+    </div>
+</footer>
+  </body>
+</html>

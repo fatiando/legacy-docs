@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Convolutional seismic modeling (fatiando.seismic.conv) &#8212; Fatiando 0.5</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.2.0/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/font-awesome/css/font-awesome.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'ac692aa892ddbb386f6a76d0f429099587eb2b37',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Fatiando 0.5" href="../index.html" />
+    <link rel="up" title="Seismics and seismology (fatiando.seismic)" href="seismic.html" />
+    <link rel="next" title="Geothermal heat (fatiando.geothermal)" href="geothermal.html" />
+    <link rel="prev" title="Finite difference solution of the 2D wave equation (fatiando.seismic.wavefd)" href="seismic.wavefd.html" />
+    
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-38125837-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head>
+  <body role="document">
+
+
+
+
+  <div id="navbar" class="navbar navbar-default navbar-default ">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img src="../_static/fatiando-logo.png">
+          fatiando</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.5</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../install.html">Install</a></li>
+                <li><a href="../gallery/index.html">Gallery</a></li>
+                <li><a href="fatiando.html">API</a></li>
+                <li><a href="../docs.html">Docs</a></li>
+                <li><a href="../develop.html">Contribute</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Convolutional seismic modeling (<code class="docutils literal"><span class="pre">fatiando.seismic.conv</span></code>)</a><ul>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="col-md-9">
+      
+  <div class="section" id="module-fatiando.seismic.conv">
+<span id="convolutional-seismic-modeling-fatiando-seismic-conv"></span><span id="fatiando-seismic-conv"></span><h1>Convolutional seismic modeling (<code class="docutils literal"><span class="pre">fatiando.seismic.conv</span></code>)<a class="headerlink" href="#module-fatiando.seismic.conv" title="Permalink to this headline">¶</a></h1>
+<p>Zero-offset convolutional seismic modeling</p>
+<p>Give a depth model and obtain a seismic zero-offset convolutional gather. You
+can give the wavelet, if you already have, or use one of the existing, from
+which we advise ricker wavelet (rickerwave function).</p>
+<ul class="simple">
+<li><a class="reference internal" href="#fatiando.seismic.conv.convolutional_model" title="fatiando.seismic.conv.convolutional_model"><code class="xref py py-func docutils literal"><span class="pre">convolutional_model</span></code></a>: given the reflectivity
+series and wavelet, it returns the convolutional seismic gather.</li>
+<li><a class="reference internal" href="#fatiando.seismic.conv.reflectivity" title="fatiando.seismic.conv.reflectivity"><code class="xref py py-func docutils literal"><span class="pre">reflectivity</span></code></a>: calculates the reflectivity
+series from the velocity model (and density model if present).</li>
+<li><a class="reference internal" href="#fatiando.seismic.conv.depth_2_time" title="fatiando.seismic.conv.depth_2_time"><code class="xref py py-func docutils literal"><span class="pre">depth_2_time</span></code></a>: convert depth property model to
+the model in time.</li>
+<li><a class="reference internal" href="#fatiando.seismic.conv.rickerwave" title="fatiando.seismic.conv.rickerwave"><code class="xref py py-func docutils literal"><span class="pre">rickerwave</span></code></a>: calculates a ricker wavelet.</li>
+</ul>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p>Yilmaz, Oz,
+Ch.2 Deconvolution. In: YILMAZ, Oz. Seismic Data Analysis: Processing,
+Inversion, and Interpretation of Seismic Data. Tulsa: Seg, 2001. Cap. 2.
+p. 159-270. Available at: &lt;<a class="reference external" href="http://dx.doi.org/10.1190/1.9781560801580.ch2">http://dx.doi.org/10.1190/1.9781560801580.ch2</a>&gt;</p>
+<dl class="function">
+<dt id="fatiando.seismic.conv.convolutional_model">
+<code class="descclassname">fatiando.seismic.conv.</code><code class="descname">convolutional_model</code><span class="sig-paren">(</span><em>rc</em>, <em>f</em>, <em>wavelet</em>, <em>dt</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fatiando/seismic/conv.html#convolutional_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fatiando.seismic.conv.convolutional_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate convolutional seismogram for a geological model</p>
+<p>Calculate the synthetic convolutional seismogram of a geological model, Vp
+is mandatory while density is optional. The given model in a matrix form is
+considered a mesh of square cells.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Since the relative difference between the model is the important, being
+consistent with the units chosen for the parameters is the only
+requirement, whatever the units.</p>
+</div>
+<p>Parameters:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>rc</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">2D-array</span><dd><p class="first last">Reflectivity values in the time domain.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>f</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd><p class="first last">Dominant frequency of the ricker wavelet.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>wavelet</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd><p class="first last">The function to consider as source in the seismic modelling.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>dt: float</dt>
+<dd><p class="first last">Sample time of the ricker wavelet and of the resulting seismogram, in
+general a value of 2.e-3 is used.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>synth_l</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">2D-array</span><dd><p class="first last">Resulting seismogram.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="fatiando.seismic.conv.depth_2_time">
+<code class="descclassname">fatiando.seismic.conv.</code><code class="descname">depth_2_time</code><span class="sig-paren">(</span><em>vel</em>, <em>model</em>, <em>dt</em>, <em>dz</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fatiando/seismic/conv.html#depth_2_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fatiando.seismic.conv.depth_2_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert depth property model to time model.</p>
+<p>Parameters:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>vel</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">2D-array</span><dd><p class="first last">Velocity values in the depth domain.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>model</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">2D-array</span><dd><p class="first last">Model values in the depth domain.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>dt: float</dt>
+<dd><p class="first last">Sample time of the ricker wavelet and of the resulting seismogram, in
+general a value of 2.e-3 is used.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>dz</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd><p class="first last">Length of square grid cells.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>rho</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">2D-array (optional)</span><dd><p class="first last">Density values for all the model, in depth domain.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>model_t</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">2D-array</span><dd><p class="first last">Property model in time domain.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="fatiando.seismic.conv.reflectivity">
+<code class="descclassname">fatiando.seismic.conv.</code><code class="descname">reflectivity</code><span class="sig-paren">(</span><em>model_t</em>, <em>rho</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fatiando/seismic/conv.html#reflectivity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fatiando.seismic.conv.reflectivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate reflectivity series in the time domain, so it is necessary to use
+the function depth_2_time first if the model is in depth domain. Note this
+this function can also be used to one dimensional array.</p>
+<p>Parameters:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>model_t</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">2D-array</span><dd><p class="first last">Velocity values in time domain.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>rho</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">2D-array (optional)</span><dd><p class="first last">Density values for all the model, in time domain.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>rc</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">2D-array</span><dd><p class="first last">Calculated reflectivity series for all the model given.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="fatiando.seismic.conv.rickerwave">
+<code class="descclassname">fatiando.seismic.conv.</code><code class="descname">rickerwave</code><span class="sig-paren">(</span><em>f</em>, <em>dt</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fatiando/seismic/conv.html#rickerwave"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fatiando.seismic.conv.rickerwave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a frequency and time sampling rate, outputs ricker function. The
+length of the function varies according to f and dt, in order for the
+ricker function starts and ends as zero. It is also considered that the
+functions is causal, what means it starts at time zero. To satisfy sampling
+and stability:</p>
+<div class="math">
+\[f &lt;&lt; \frac{1}{2 dt}.\]</div>
+<p>Here, we consider this as:</p>
+<div class="math">
+\[f &lt; 0.2 \frac{1}{2 dt}.\]</div>
+<p>Parameters:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>f</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd><p class="first last">dominant frequency value in Hz</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>dt</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd><p class="first last">time sampling rate in seconds (usually it is in the order of ms)</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>ricker</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd><p class="first last">Ricker function for the given parameters.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        <p class="pull-right">
+            <a href="#">Back to top</a>
+            
+                <br/>
+                
+<div id="sourcelink">
+  <a href="../_sources/api/seismic.conv.txt"
+     rel="nofollow">Source</a>
+</div>
+            
+        </p>
+
+        <p class="text-center">
+            &copy; Copyright 2010-2016, Leonardo Uieda.
+            Created using <a
+                href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+        </p>
+    </div>
+</footer>
+  </body>
+</html>
