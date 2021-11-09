@@ -28,7 +28,7 @@ blockquote {
 
 /* Add custom class for the deprecation message. The banner gets fixed on top when */
 /* scrolling thanks to the fixed_banner.js script. */
-.deprecation-message {
+.deprecation-banner {
     background-color: #d62728;
     color: white;
     font-weight: 600;
@@ -39,16 +39,16 @@ blockquote {
     width: 100%;
 }
 
-.deprecation-message a {
+.deprecation-banner a {
     color: white;
     text-decoration: underline;
 }
 
-.deprecation-message p {
+.deprecation-banner p {
     margin: 0;
 }
 
-.deprecation-message code {
+.deprecation-banner code {
     background-color: #d62728;
     color: white;
 }
