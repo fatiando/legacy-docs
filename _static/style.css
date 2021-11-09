@@ -53,6 +53,12 @@ blockquote {
     color: white;
 }
 
+/* Add padding so the transition is smooth */
+.navbar-fixed-top + .navbar {
+    padding-top: 48px;
+}
+
+/* --------------------------------------------- */
 
 .alert {
     font-size: 12pt;
